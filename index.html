@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الصوتية والبودكاست الفائقة</title>
+    <title>المكتبة الصوتية والبودكاست الشاملة</title>
     <style>
         :root[data-theme="dark"] {
             --bg-color: #07090e;
@@ -45,7 +45,6 @@
         .app-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 4px; }
         .app-header h1 { font-size: 1.15rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* شريط التبويب */
         .nav-tabs { display: flex; background: var(--input-bg); border-radius: 12px; padding: 3px; gap: 3px; border: 1px solid var(--card-border); overflow-x: auto; }
         .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 8px 6px; border-radius: 9px; font-size: 0.7rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
         .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
@@ -53,20 +52,20 @@
         .section-view { display: none; flex-direction: column; gap: 10px; }
         .section-view.active { display: flex; }
 
-        .actions-bar { display: flex; gap: 8px; align-items: center; }
+        .actions-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .btn-action { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; text-align: center; box-shadow: var(--shadow); }
         .btn-action.primary { background: linear-gradient(135deg, var(--primary), #818cf8); border: none; color: white; }
 
-        .sort-select { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; outline: none; cursor: pointer; }
+        .sort-select, .search-input { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; outline: none; }
+        .search-input { flex: 1; }
 
         /* المشغل */
         .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
-        
         .player-art-container { position: relative; width: 65px; height: 65px; margin: 0 auto 10px auto; }
         .book-cover-art {
             width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), #c084fc);
             border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4); animation: pulseGlow 4s infinite alternate;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4); animation: pulseGlow 4s infinite alternate; background-size: cover; background-position: center;
         }
         @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
 
@@ -87,9 +86,8 @@
         .select-wrapper { display: flex; flex-direction: column; gap: 2px; }
         .select-wrapper label { font-size: 0.6rem; color: var(--text-muted); font-weight: 700; }
         .select-wrapper select { background: transparent; border: none; color: var(--text-main); font-size: 0.75rem; font-weight: 700; outline: none; cursor: pointer; }
-        .timer-alert { text-align: center; font-size: 0.65rem; color: #d97706; margin-top: 6px; font-weight: 700; min-height: 10px; }
 
-        /* القوائم */
+        /* القوائم والقسم */
         .list-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 14px; flex: 1; display: flex; flex-direction: column; max-height: 290px; box-shadow: var(--shadow); }
         .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .list-header h3 { font-size: 0.85rem; font-weight: 800; }
@@ -113,12 +111,15 @@
         .setting-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid var(--card-border); }
         .setting-item:last-child { border-bottom: none; padding-bottom: 0; }
         .setting-item select, .setting-item input[type="checkbox"] { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; outline: none; }
+        
+        .transcript-btn { background: var(--primary); color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 0.65rem; cursor: pointer; margin-top: 4px; }
+        .online-pod-img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
     </style>
 </head>
 <body>
     <div class="app-wrapper">
         <header class="app-header">
-            <h1>🎧 المكتبة الفائقة</h1>
+            <h1>🎧 المكتبة الاحترافية</h1>
             <button id="btn-clear-db" class="btn-action" style="padding: 4px 8px; font-size: 0.7rem; flex:none;">إعادة ضبط</button>
         </header>
 
@@ -130,7 +131,7 @@
             <button class="tab-btn" onclick="switchTab('settings')">⚙️ الإعدادات</button>
         </nav>
 
-        <!-- قسم مكتبة المجلدات -->
+        <!-- قسم مكتبة المجلدات الهرمية -->
         <div id="view-library" class="section-view active">
             <div class="actions-bar">
                 <button class="btn-action primary" onclick="pickDirectoryFast()">⚡ اختيار مجلد التخزين</button>
@@ -147,7 +148,7 @@
                 </div>
                 <div id="breadcrumb" class="breadcrumb-trail"></div>
                 <ul id="library-list">
-                    <li class="empty-state">اضغط على الزر أعلاه لاختيار مجلدك الرئيسي بذكاء وسرعة فائقة!</li>
+                    <li class="empty-state">اضغط على الزر أعلاه لاستعراض مجلداتك بهرمية وسرعة فائقة!</li>
                 </ul>
             </div>
         </div>
@@ -176,7 +177,7 @@
             </div>
         </div>
 
-        <!-- قسم السجل (ما تم تشغيله) -->
+        <!-- قسم السجل -->
         <div id="view-history" class="section-view">
             <div class="list-card" style="max-height: 360px;">
                 <div class="list-header">
@@ -188,25 +189,29 @@
             </div>
         </div>
 
-        <!-- قسم البودكاست المخصص -->
+        <!-- قسم البودكاست الشامل (أونلاين + محلي) -->
         <div id="view-podcasts" class="section-view">
             <div class="actions-bar">
-                <label class="btn-action primary">
-                    🎙️ إضافة حلقات بودكاست جديدة
-                    <input type="file" id="podcast-input" accept="audio/*" multiple hidden>
+                <input type="text" id="online-pod-query" class="search-input" placeholder="🌐 ابحث عن بودكاست أونلاين...">
+                <button class="btn-action primary" style="flex:none; padding:8px 12px;" onclick="searchPodcastOnline()">بحث أونلاين</button>
+            </div>
+            <div class="actions-bar">
+                <label class="btn-action" style="font-size:0.75rem;">
+                    📁 إضافة حلقات محلية
+                    <input type="file" id="podcast-input" accept="audio/*,.srt,.vtt,.json" multiple hidden>
                 </label>
-                <select id="pod-sort" class="sort-select" onchange="renderPodcastsList()">
-                    <option value="name">ترتيب بالاسم</option>
-                    <option value="date">ترتيب بالتاريخ</option>
-                    <option value="status">ترتيب بحالة التقدم</option>
+                <select id="pod-filter" class="sort-select" onchange="renderPodcastsList()">
+                    <option value="all">الكل</option>
+                    <option value="progress">جاري الاستماع</option>
+                    <option value="completed">المكتملة</option>
                 </select>
             </div>
             <div class="list-card">
                 <div class="list-header">
-                    <h3>حلقات البودكاست</h3>
+                    <h3 id="pod-section-title">حلقات والبودكاست</h3>
                 </div>
                 <ul id="podcasts-list">
-                    <li class="empty-state">لم تقم بإضافة حلقات بودكاست بعد.</li>
+                    <li class="empty-state">ابحث أونلاين عن أي بودكاست أو أضف حلقات محلية.</li>
                 </ul>
             </div>
         </div>
@@ -265,11 +270,12 @@
         <!-- المشغل الفاخر -->
         <main class="player-card">
             <div class="player-art-container">
-                <div class="book-cover-art">🎧</div>
+                <div id="cover-art" class="book-cover-art">🎧</div>
             </div>
             <div class="book-meta">
                 <div id="status-badge" class="badge">جاهز للتشغيل</div>
                 <h2 id="chapter-title">اختر ملفاً أو مجلداً للبدء</h2>
+                <div id="current-transcript-container"></div>
             </div>
 
             <audio id="audio-player"></audio>
@@ -309,7 +315,6 @@
                     </select>
                 </div>
             </div>
-            <div id="timer-status" class="timer-alert"></div>
         </main>
     </div>
 
@@ -322,12 +327,13 @@
         const historyList = document.getElementById('history-list');
         const podcastsList = document.getElementById('podcasts-list');
         const breadcrumbEl = document.getElementById('breadcrumb');
+        const transcriptContainer = document.getElementById('current-transcript-container');
+        const coverArt = document.getElementById('cover-art');
         
         const fileInput = document.getElementById('file-input');
         const podcastInput = document.getElementById('podcast-input');
         const speedSelect = document.getElementById('speed-select');
         const timerSelect = document.getElementById('timer-select');
-        const timerStatus = document.getElementById('timer-status');
         const btnPlayPause = document.getElementById('btn-play-pause');
         const btnRewind = document.getElementById('btn-rewind');
         const btnForward = document.getElementById('btn-forward');
@@ -343,7 +349,8 @@
         const settingWakeLock = document.getElementById('setting-wakelock');
         const libSort = document.getElementById('lib-sort');
         const filesSort = document.getElementById('files-sort');
-        const podSort = document.getElementById('pod-sort');
+        const podFilter = document.getElementById('pod-filter');
+        const onlinePodQuery = document.getElementById('online-pod-query');
 
         let db;
         let rootDirHandle = null;
@@ -351,6 +358,7 @@
         let currentPathStack = [];
         let currentFilesList = [];
         let podcastEpisodes = [];
+        let companionFiles = {};
         let historyItems = JSON.parse(localStorage.getItem('app_history') || '[]');
         let currentTrackHandle = null;
         let currentTrackUrl = null;
@@ -394,8 +402,7 @@
             }
         }
 
-        // IndexedDB للحفظ المستدام
-        const request = indexedDB.open('FinalAudioDB_v3', 1);
+        const request = indexedDB.open('FinalAudioDB_v5', 1);
         request.onerror = () => console.error("DB error");
         request.onsuccess = async (e) => {
             db = e.target.result;
@@ -455,7 +462,6 @@
             } catch (err) {}
         }
 
-        // الفرز المتقدم
         function sortItems(items, type, getFileObj) {
             return items.sort((a, b) => {
                 if (type === 'name') {
@@ -476,7 +482,7 @@
 
         async function renderFileSystem() {
             if (!currentSubHandle) return;
-            libraryList.innerHTML = '<li class="empty-state">جاري القراءة...</li>';
+            libraryList.innerHTML = '<li class="empty-state">جاري القراءة الهرمية...</li>';
             breadcrumbEl.innerHTML = '';
 
             let crumb = document.createElement('span');
@@ -566,7 +572,6 @@
             }
         }
 
-        // الملفات الفردية
         fileInput.addEventListener('change', (e) => {
             const files = Array.from(e.target.files).filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i));
             if (files.length === 0) return;
@@ -612,12 +617,128 @@
             });
         }
 
-        // قسم البودكاست
-        podcastInput.addEventListener('change', (e) => {
-            const files = Array.from(e.target.files).filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i));
-            if (files.length === 0) return;
+        // محرك البحث أونلاين عن البودكاست عبر iTunes API
+        async function searchPodcastOnline() {
+            const query = onlinePodQuery.value.trim();
+            if (!query) return;
 
-            files.forEach((file, idx) => {
+            podcastsList.innerHTML = '<li class="empty-state">جاري البحث أونلاين عبر الشبكة...</li>';
+
+            try {
+                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=podcast&limit=10`);
+                const data = await res.json();
+
+                if (data.results.length === 0) {
+                    podcastsList.innerHTML = '<li class="empty-state">لم يتم العثور على بودكاست بهذا الاسم.</li>';
+                    return;
+                }
+
+                podcastsList.innerHTML = '';
+                data.results.forEach(pod => {
+                    const li = document.createElement('li');
+                    li.className = 'item-row';
+                    li.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <img src="${pod.artworkUrl60}" class="online-pod-img">
+                            <span class="item-title">${pod.collectionName}</span>
+                        </div>
+                        <div class="item-meta">
+                            <span>${pod.artistName}</span>
+                            <span style="color:var(--primary)">عرض الحلقات ⬅</span>
+                        </div>`;
+                    li.onclick = () => fetchOnlineEpisodes(pod.feedUrl, pod.collectionName, pod.artworkUrl100);
+                    podcastsList.appendChild(li);
+                });
+            } catch (err) {
+                podcastsList.innerHTML = '<li class="empty-state">تعذر الاتصال بالشبكة للبحث عن البودكاست.</li>';
+            }
+        }
+
+        async function fetchOnlineEpisodes(feedUrl, podTitle, artUrl) {
+            podcastsList.innerHTML = '<li class="empty-state">جاري جلب حلقات البودكاست...</li>';
+
+            try {
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
+                const data = await res.json();
+
+                if (!data.items || data.items.length === 0) {
+                    podcastsList.innerHTML = '<li class="empty-state">تعذر تحميل حلقات هذا البودكاست.</li>';
+                    return;
+                }
+
+                podcastsList.innerHTML = '';
+                data.items.forEach(ep => {
+                    if (ep.enclosure && ep.enclosure.link) {
+                        const epId = 'online_' + ep.guid;
+                        const savedTime = parseFloat(localStorage.getItem(`pos_${epId}`) || 0);
+                        const isDone = localStorage.getItem(`done_${epId}`) === "true";
+
+                        const li = document.createElement('li');
+                        li.className = 'item-row';
+                        li.innerHTML = `
+                            <span class="item-title">🎙️ ${ep.title}</span>
+                            <div class="item-meta">
+                                <span>${ep.pubDate ? ep.pubDate.split(' ')[0] : ''}</span>
+                                <span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${isDone ? '✔ مكتمل' : 'تشغيل'}</span>
+                            </div>`;
+                        li.onclick = () => playOnlineStream(ep.enclosure.link, epId, ep.title, artUrl, ep.description);
+                        podcastsList.appendChild(li);
+                    }
+                });
+            } catch (err) {
+                podcastsList.innerHTML = '<li class="empty-state">خطأ في قراءة خلاصة البودكاست.</li>';
+            }
+        }
+
+        function playOnlineStream(url, id, title, artUrl, desc) {
+            audioPlayer.src = url;
+            chapterTitle.textContent = title;
+            audioPlayer.dataset.trackId = id;
+
+            if (artUrl) {
+                coverArt.style.backgroundImage = `url(${artUrl})`;
+                coverArt.textContent = '';
+            } else {
+                coverArt.style.backgroundImage = 'none';
+                coverArt.textContent = '🎧';
+            }
+
+            if (desc) {
+                companionFiles[title] = desc.replace(/<[^>]*>?/gm, '');
+                transcriptContainer.innerHTML = `<button class="transcript-btn" onclick="alert(companionFiles['${title}'])">📄 عرض وصف/تفاصيل الحلقة</button>`;
+            } else {
+                transcriptContainer.innerHTML = '';
+            }
+
+            let savedTime = parseFloat(localStorage.getItem(`pos_${id}`) || 0);
+            const isDone = localStorage.getItem(`done_${id}`) === "true";
+            
+            const rewindSecs = parseInt(settingRewind.value);
+            if (savedTime > rewindSecs && !isDone) savedTime -= rewindSecs;
+
+            if (savedTime && !isDone) audioPlayer.currentTime = savedTime;
+
+            audioPlayer.play().catch(() => {});
+            btnPlayPause.textContent = "⏸";
+            updateBadge(isDone, savedTime);
+            setupMediaSession(title);
+            addToHistory(title, id);
+        }
+
+        podcastInput.addEventListener('change', (e) => {
+            const rawFiles = Array.from(e.target.files);
+            const audioFiles = rawFiles.filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i));
+            const sideFiles = rawFiles.filter(f => f.name.match(/\.(srt|vtt|json)$/i));
+
+            sideFiles.forEach(async sf => {
+                const baseName = sf.name.replace(/\.[^/.]+$/, "");
+                const text = await sf.text();
+                companionFiles[baseName] = text;
+            });
+
+            if (audioFiles.length === 0) return;
+
+            audioFiles.forEach((file, idx) => {
                 podcastEpisodes.push({
                     id: 'pod_' + idx + '_' + file.name,
                     title: file.name.replace(/\.[^/.]+$/, ""),
@@ -631,15 +752,25 @@
 
         function renderPodcastsList() {
             podcastsList.innerHTML = '';
-            if (podcastEpisodes.length === 0) {
-                podcastsList.innerHTML = '<li class="empty-state">لم تقم بإضافة حلقات بودكاست بعد.</li>';
+            let filtered = [...podcastEpisodes];
+
+            const filterVal = podFilter.value;
+            if (filterVal === 'progress') {
+                filtered = filtered.filter(ep => {
+                    const pos = parseFloat(localStorage.getItem(`pos_${ep.id}`) || 0);
+                    const done = localStorage.getItem(`done_${ep.id}`) === "true";
+                    return pos > 0 && !done;
+                });
+            } else if (filterVal === 'completed') {
+                filtered = filtered.filter(ep => localStorage.getItem(`done_${ep.id}`) === "true");
+            }
+
+            if (filtered.length === 0) {
+                podcastsList.innerHTML = '<li class="empty-state">لا توجد حلقات بودكاست محلي. يمكنك البحث أونلاين أعلاه!</li>';
                 return;
             }
 
-            const sortType = podSort.value;
-            let sorted = sortItems([...podcastEpisodes], sortType);
-
-            sorted.forEach(ep => {
+            filtered.forEach(ep => {
                 const li = document.createElement('li');
                 li.className = 'item-row';
                 const savedTime = parseFloat(localStorage.getItem(`pos_${ep.id}`) || 0);
@@ -652,13 +783,14 @@
                 let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
                 metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
 
-                li.innerHTML = `<span class="item-title">🎙️ ${ep.title}</span><div class="item-meta">${metaHtml}</div>`;
+                let hasTranscript = companionFiles[ep.title] ? `<button class="transcript-btn" onclick="event.stopPropagation(); alert(companionFiles['${ep.title}'])">📄 التفريغ</button>` : '';
+
+                li.innerHTML = `<span class="item-title">🎙️ ${ep.title}</span><div class="item-meta">${metaHtml} ${hasTranscript}</div>`;
                 li.onclick = () => playFile(ep.file, ep.id, ep.title, null, true);
                 podcastsList.appendChild(li);
             });
         }
 
-        // قسم السجل
         function addToHistory(title, id) {
             historyItems = historyItems.filter(item => item.id !== id);
             historyItems.unshift({ title, id, time: new Date().toLocaleTimeString('ar-EG', {hour: '2-digit', minute:'2-digit'}) });
@@ -689,6 +821,14 @@
             audioPlayer.src = currentTrackUrl;
             chapterTitle.textContent = title;
             audioPlayer.dataset.trackId = fileId;
+            coverArt.style.backgroundImage = 'none';
+            coverArt.textContent = '🎧';
+
+            if (companionFiles[title]) {
+                transcriptContainer.innerHTML = `<button class="transcript-btn" onclick="alert(companionFiles['${title}'])">📄 عرض تفريغ الحلقة / الفصول</button>`;
+            } else {
+                transcriptContainer.innerHTML = '';
+            }
 
             let savedTime = parseFloat(localStorage.getItem(`pos_${fileId}`) || 0);
             const isDone = localStorage.getItem(`done_${fileId}`) === "true";
@@ -696,7 +836,6 @@
             const rewindSecs = parseInt(settingRewind.value);
             if (savedTime > rewindSecs && !isDone) savedTime -= rewindSecs;
 
-            // تطبيق ميزة تخطي المقدمة للبودكاست إذا كان في البداية
             if (isPodcast && savedTime === 0) {
                 const introSkip = parseInt(settingPodIntro.value) || 0;
                 if (introSkip > 0) savedTime = introSkip;
@@ -719,7 +858,7 @@
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: title,
-                    artist: 'المكتبة الفائقة',
+                    artist: 'المكتبة الاحترافية',
                     album: 'كتب وبودكاست صوتي'
                 });
 
@@ -769,7 +908,6 @@
             if (tid) localStorage.setItem(`dur_${tid}`, audioPlayer.duration);
         });
 
-        // تم فصل التحديث البرمجي عن إعادة رسم القوائم لمنع اللاج بالكامل
         audioPlayer.addEventListener('timeupdate', () => {
             const tid = audioPlayer.dataset.trackId;
             if (!tid) return;
@@ -787,7 +925,6 @@
                         localStorage.setItem(`done_${tid}`, "true");
                         updateBadge(true, currentTime);
                         
-                        // خاصية الحذف التلقائي لحلقات البودكاست المنتهية إذا كانت مفعلة
                         if (settingPodAutodel.checked && tid.startsWith('pod_')) {
                             podcastEpisodes = podcastEpisodes.filter(ep => ep.id !== tid);
                             renderPodcastsList();
@@ -842,7 +979,7 @@
 
         btnClearDb.addEventListener('click', () => {
             if (confirm("هل تريد مسح جميع البيانات والتقدم والسجل؟")) {
-                indexedDB.deleteDatabase('FinalAudioDB_v3');
+                indexedDB.deleteDatabase('FinalAudioDB_v5');
                 localStorage.clear();
                 location.reload();
             }
