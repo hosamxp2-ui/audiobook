@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الصوتية الذكية المتقدمة</title>
+    <title>المكتبة الصوتية الذكية الاحترافية</title>
     <style>
-        :root {
+        :root[data-theme="dark"] {
             --bg-color: #090d16;
             --card-bg: rgba(30, 41, 59, 0.75);
             --card-border: rgba(255, 255, 255, 0.08);
@@ -14,8 +14,21 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #10b981;
+            --input-bg: rgba(15, 23, 42, 0.4);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root[data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #059669;
+            --input-bg: rgba(241, 245, 249, 0.8);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: background 0.3s, color 0.3s; }
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
@@ -30,69 +43,86 @@
         .app-header h1 { font-size: 1.1rem; font-weight: 700; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         /* شريط التنقل بين الأقسام */
-        .nav-tabs { display: flex; background: rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 4px; gap: 4px; border: 1px solid var(--card-border); }
-        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 8px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .nav-tabs { display: flex; background: var(--input-bg); border-radius: 12px; padding: 4px; gap: 4px; border: 1px solid var(--card-border); }
+        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
         .tab-btn.active { background: var(--primary); color: white; }
 
         .section-view { display: none; flex-direction: column; gap: 12px; }
         .section-view.active { display: flex; }
 
         .actions-bar { display: flex; gap: 8px; }
-        .btn-action { flex: 1; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: center; }
-        .btn-action.primary { background: var(--primary); border: none; }
+        .btn-action { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: center; }
+        .btn-action.primary { background: var(--primary); border: none; color: white; }
 
-        /* بطاقة التشغيل */
-        .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 18px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
+        /* بطاقة المشغل العصري */
+        .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 18px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); }
+        
+        .book-cover-art {
+            width: 70px; height: 70px; margin: 0 auto 12px auto; background: linear-gradient(135deg, var(--primary), #c084fc);
+            border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3); animation: pulseGlow 4s infinite alternate;
+        }
+        @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+
         .book-meta { text-align: center; margin-bottom: 14px; }
-        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; background: rgba(148, 163, 184, 0.15); color: var(--text-muted); margin-bottom: 6px; }
-        .badge.playing { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; background: var(--input-bg); color: var(--text-muted); margin-bottom: 6px; }
+        .badge.playing { background: rgba(245, 158, 11, 0.15); color: #d97706; }
         .badge.completed { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
         .book-meta h2 { font-size: 0.95rem; font-weight: 600; color: var(--text-main); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         .progress-container { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 0.75rem; color: var(--text-muted); }
-        .progress-container input[type="range"] { flex: 1; accent-color: var(--primary); cursor: pointer; height: 4px; border-radius: 2px; }
+        .progress-container input[type="range"] { flex: 1; accent-color: var(--primary); cursor: pointer; height: 5px; border-radius: 3px; }
 
         .main-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-bottom: 14px; }
-        .control-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px 14px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
-        .control-btn.main-play { background: var(--primary); border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+        .control-btn { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px 14px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+        .control-btn.main-play { background: var(--primary); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
 
-        .extra-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(15, 23, 42, 0.4); padding: 8px; border-radius: 10px; }
+        .extra-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--input-bg); padding: 8px; border-radius: 12px; }
         .select-wrapper { display: flex; flex-direction: column; gap: 2px; }
         .select-wrapper label { font-size: 0.65rem; color: var(--text-muted); }
         .select-wrapper select { background: transparent; border: none; color: var(--text-main); font-size: 0.75rem; font-weight: 600; outline: none; cursor: pointer; }
-        .timer-alert { text-align: center; font-size: 0.7rem; color: #fbbf24; margin-top: 6px; min-height: 12px; }
+        .timer-alert { text-align: center; font-size: 0.7rem; color: #d97706; margin-top: 6px; min-height: 12px; }
 
-        /* القوائم */
-        .list-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 14px; flex: 1; display: flex; flex-direction: column; max-height: 290px; }
+        /* القوائم والقسم */
+        .list-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 14px; flex: 1; display: flex; flex-direction: column; max-height: 270px; }
         .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .list-header h3 { font-size: 0.85rem; font-weight: 600; }
         .breadcrumb { font-size: 0.75rem; color: var(--primary); cursor: pointer; margin-bottom: 6px; display: none; }
         
         ul { list-style: none; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
         ul::-webkit-scrollbar { width: 4px; }
-        ul::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+        ul::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
 
         .empty-state { text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 15px; }
 
-        li.item-row { padding: 10px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; cursor: pointer; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; }
-        li.item-row:hover { background: rgba(255, 255, 255, 0.06); }
-        li.item-row.active { background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); color: #818cf8; font-weight: 600; }
+        li.item-row { padding: 10px; background: var(--input-bg); border-radius: 10px; cursor: pointer; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; }
+        li.item-row:hover { opacity: 0.9; }
+        li.item-row.active { background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); color: var(--primary); font-weight: 600; }
         .item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 55%; }
         .item-meta { font-size: 0.7rem; color: var(--text-muted); text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+
+        /* قسم الإعدادات */
+        .settings-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .setting-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; padding-bottom: 8px; border-bottom: 1px solid var(--card-border); }
+        .setting-item:last-child { border-bottom: none; }
+        .setting-item select, .setting-item input[type="checkbox"] { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; }
     </style>
 </head>
 <body>
     <div class="app-wrapper">
         <header class="app-header">
             <h1>🎧 المكتبة الصوتية الذكية</h1>
-            <button id="btn-clear-db" class="btn-action" style="padding: 4px 8px; font-size: 0.7rem;">إعادة ضبط الكل</button>
+            <button id="btn-clear-db" class="btn-action" style="padding: 4px 8px; font-size: 0.7rem;">إعادة ضبط</button>
         </header>
 
+        <!-- التنقل بين الأقسام -->
         <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('books')">📚 قسم الكتب (المجلدات)</button>
-            <button class="tab-btn" onclick="switchTab('files')">📁 قسم الملفات الفردية</button>
+            <button class="tab-btn active" onclick="switchTab('books')">📚 الكتب</button>
+            <button class="tab-btn" onclick="switchTab('files')">📁 الملفات</button>
+            <button class="tab-btn" onclick="switchTab('settings')">⚙️ الإعدادات</button>
         </nav>
 
+        <!-- قسم الكتب -->
         <div id="view-books" class="section-view active">
             <div class="actions-bar">
                 <label class="btn-action primary">
@@ -106,11 +136,12 @@
                     <span id="back-to-books" class="breadcrumb" onclick="showBooksList()">⬅ العودة للكتب</span>
                 </div>
                 <ul id="books-list">
-                    <li class="empty-state">لم تقم بإضافة أي كتب أو مجلدات بعد.</li>
+                    <li class="empty-state">لم تقم بإضافة أي كتب بعد.</li>
                 </ul>
             </div>
         </div>
 
+        <!-- قسم الملفات الفردية -->
         <div id="view-files" class="section-view">
             <div class="actions-bar">
                 <label class="btn-action primary">
@@ -120,15 +151,50 @@
             </div>
             <div class="list-card">
                 <div class="list-header">
-                    <h3>قائمة الملفات</h3>
+                    <h3>الملفات الفردية</h3>
                 </div>
                 <ul id="files-list">
-                    <li class="empty-state">لم تقم بإضافة ملفات فردية بعد.</li>
+                    <li class="empty-state">لم تقم بإضافة ملفات بعد.</li>
                 </ul>
             </div>
         </div>
 
+        <!-- قسم الإعدادات -->
+        <div id="view-settings" class="section-view">
+            <div class="settings-card">
+                <div class="setting-item">
+                    <span>🌙 الثيم (المظهر)</span>
+                    <select id="setting-theme" onchange="changeTheme(this.value)">
+                        <option value="dark">ليلي (داكن)</option>
+                        <option value="light">نهاري (فاتح)</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <span>⏪ القفز التلقائي عند الفتح (ثوانٍ)</span>
+                    <select id="setting-rewind">
+                        <option value="0">بدون إرجاع</option>
+                        <option value="3" selected>3 ثوانٍ للوراء</option>
+                        <option value="5">5 ثوانٍ للوراء</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <span>⏱️ مدة التقديم والتأخير السريع</span>
+                    <select id="setting-skip">
+                        <option value="5">5 ثوانٍ</option>
+                        <option value="10" selected>10 ثوانٍ</option>
+                        <option value="30">30 ثانية</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <span>💡 منع انطفاء الشاشة (Wake Lock)</span>
+                    <input type="checkbox" id="setting-wakelock" onchange="toggleWakeLock(this.checked)">
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة التشغيل المركزية العصرية -->
         <main class="player-card">
+            <div class="book-cover-art">📖</div>
             <div class="book-meta">
                 <div id="status-badge" class="badge">جاهز للتشغيل</div>
                 <h2 id="chapter-title">اختر كتاباً أو ملفاً للبدء</h2>
@@ -196,6 +262,10 @@
         const currentTimeEl = document.getElementById('current-time');
         const totalDurationEl = document.getElementById('total-duration');
         const btnClearDb = document.getElementById('btn-clear-db');
+        const settingTheme = document.getElementById('setting-theme');
+        const settingRewind = document.getElementById('setting-rewind');
+        const settingSkip = document.getElementById('setting-skip');
+        const settingWakeLock = document.getElementById('setting-wakelock');
 
         let db;
         let currentBooks = [];
@@ -204,8 +274,47 @@
         let currentTrackId = null;
         let currentTrackUrl = null;
         let currentSourceType = 'file';
+        let wakeLockObj = null;
 
-        const request = indexedDB.open('SmartAudiobooksDB_v2', 1);
+        // إدارة الثيم والإعدادات
+        function changeTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('app_theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('app_theme') || 'dark';
+        settingTheme.value = savedTheme;
+        changeTheme(savedTheme);
+
+        settingRewind.value = localStorage.getItem('pref_rewind') || '3';
+        settingRewind.addEventListener('change', () => localStorage.setItem('pref_rewind', settingRewind.value));
+
+        settingSkip.value = localStorage.getItem('pref_skip') || '10';
+        settingSkip.addEventListener('change', () => {
+            localStorage.setItem('pref_skip', settingSkip.value);
+            updateSkipButtonsText();
+        });
+
+        function updateSkipButtonsText() {
+            const skipVal = settingSkip.value;
+            btnRewind.textContent = `⏪ ${skipVal}s`;
+            btnForward.textContent = `${skipVal}s ⏩`;
+        }
+        updateSkipButtonsText();
+
+        async function toggleWakeLock(enabled) {
+            if (enabled && 'wakeLock' in navigator) {
+                try {
+                    wakeLockObj = await navigator.wakeLock.request('screen');
+                } catch (err) { console.error(err); }
+            } else if (wakeLockObj) {
+                wakeLockObj.release();
+                wakeLockObj = null;
+            }
+        }
+
+        // قاعدة البيانات IndexedDB
+        const request = indexedDB.open('SmartAudiobooksDB_v3', 1);
         request.onerror = () => console.error("IndexedDB error");
         request.onsuccess = (e) => {
             db = e.target.result;
@@ -224,9 +333,12 @@
             if (tab === 'books') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('view-books').classList.add('active');
-            } else {
+            } else if (tab === 'files') {
                 document.querySelectorAll('.tab-btn')[1].classList.add('active');
                 document.getElementById('view-files').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
+                document.getElementById('view-settings').classList.add('active');
             }
         }
 
@@ -295,7 +407,7 @@
             booksList.innerHTML = '';
             
             if (currentBooks.length === 0) {
-                booksList.innerHTML = '<li class="empty-state">لم تقم بإضافة أي كتب أو مجلدات بعد.</li>';
+                booksList.innerHTML = '<li class="empty-state">لم تقم بإضافة أي كتب بعد.</li>';
                 return;
             }
 
@@ -328,7 +440,7 @@
                 if (isDone) percent = 100;
 
                 let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
-                metaHtml += `<span style="color:${isDone ? '#10b981' : '#f59e0b'}">${percent}% ${isDone ? '✔' : ''}</span>`;
+                metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
 
                 li.innerHTML = `<span class="item-title">${track.title}</span><div class="item-meta">${metaHtml}</div>`;
                 li.onclick = () => playTrack(track, 'book', book);
@@ -344,7 +456,7 @@
         function renderFilesList() {
             filesList.innerHTML = '';
             if (currentFiles.length === 0) {
-                filesList.innerHTML = '<li class="empty-state">لم تقم بإضافة ملفات فردية بعد.</li>';
+                filesList.innerHTML = '<li class="empty-state">لم تقم بإضافة ملفات بعد.</li>';
                 return;
             }
 
@@ -362,7 +474,7 @@
                 if (isDone) percent = 100;
 
                 let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
-                metaHtml += `<span style="color:${isDone ? '#10b981' : '#f59e0b'}">${percent}% ${isDone ? '✔' : ''}</span>`;
+                metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
 
                 li.innerHTML = `<span class="item-title">🎵 ${track.title}</span><div class="item-meta">${metaHtml}</div>`;
                 li.onclick = () => playTrack(track, 'file');
@@ -379,9 +491,14 @@
             audioPlayer.src = currentTrackUrl;
             chapterTitle.textContent = track.title;
 
-            const savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
+            let savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
             const isDone = localStorage.getItem(`done_${track.id}`) === "true";
             
+            const rewindSecs = parseInt(settingRewind.value);
+            if (savedTime > rewindSecs && !isDone) {
+                savedTime -= rewindSecs; // تطبيق القفز التلقائي للخلف عند الفتح
+            }
+
             if (savedTime && !isDone) audioPlayer.currentTime = savedTime;
 
             audioPlayer.play().catch(() => {});
@@ -444,6 +561,9 @@
             currentTrackUrl = URL.createObjectURL(track.file);
             audioPlayer.src = currentTrackUrl;
             chapterTitle.textContent = track.title;
+            
+            const rewindSecs = parseInt(settingRewind.value);
+            if (time > rewindSecs) time -= rewindSecs;
             audioPlayer.currentTime = time;
             
             const isDone = localStorage.getItem(`done_${track.id}`) === "true";
@@ -493,8 +613,6 @@
                     }
                 }
                 saveCurrentState();
-                
-                // تحديث واجهة القائمة الحية للوقت والنسبة
                 if (activeBook) openBook(activeBook);
                 else renderFilesList();
             }
@@ -509,8 +627,15 @@
             return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
 
-        btnRewind.addEventListener('click', () => audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10));
-        btnForward.addEventListener('click', () => audioPlayer.currentTime = Math.min(audioPlayer.duration || 0, audioPlayer.currentTime + 10));
+        btnRewind.addEventListener('click', () => {
+            const skip = parseInt(settingSkip.value) || 10;
+            audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - skip);
+        });
+        btnForward.addEventListener('click', () => {
+            const skip = parseInt(settingSkip.value) || 10;
+            audioPlayer.currentTime = Math.min(audioPlayer.duration || 0, audioPlayer.currentTime + skip);
+        });
+
         speedSelect.addEventListener('change', (e) => audioPlayer.playbackRate = parseFloat(e.target.value));
 
         audioPlayer.addEventListener('ended', () => {
@@ -530,7 +655,7 @@
 
         btnClearDb.addEventListener('click', () => {
             if (confirm("هل تريد مسح جميع البيانات والمجلدات والتقدم؟")) {
-                indexedDB.deleteDatabase('SmartAudiobooksDB_v2');
+                indexedDB.deleteDatabase('SmartAudiobooksDB_v3');
                 localStorage.clear();
                 location.reload();
             }
