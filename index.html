@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشغل الكتب الصوتية</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+</head>
+<body>
+    <div class="player-container">
+        <h1>📚 مشغل الكتب الصوتية</h1>
+
+        <div class="file-picker-section">
+            <label class="btn-upload">
+                📂 اختر ملفات صوتية من جهازك
+                <input type="file" id="file-input" accept="audio/*" multiple style="display: none;">
+            </label>
+            <label class="btn-upload btn-folder">
+                📁 اختر مجلد كتاب كامل
+                <input type="file" id="folder-input" accept="audio/*" webkitdirectory directory multiple style="display: none;">
+            </label>
+        </div>
+
+        <div class="book-info">
+            <h2 id="chapter-title">قم بفتح ملفات صوتية للبدء</h2>
+            <div id="status-badge" class="badge">لم يبدأ</div>
+        </div>
+
+        <audio id="audio-player" controls></audio>
+
+        <div class="seek-buttons">
+            <button id="btn-rewind">⏪ 10 ثوانٍ</button>
+            <button id="btn-forward">10 ثوانٍ ⏩</button>
+        </div>
+
+        <div class="controls-extra">
+            <div class="control-item">
+                <label for="speed-select">السرعة:</label>
+                <select id="speed-select">
+                    <option value="0.75">0.75x</option>
+                    <option value="1" selected>1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+            </div>
+
+            <div class="control-item">
+                <label for="timer-select">⏱️ المؤقت:</label>
+                <select id="timer-select">
+                    <option value="0">مغلق</option>
+                    <option value="5">5 دقائق</option>
+                    <option value="15">15 دقيقة</option>
+                    <option value="30">30 دقيقة</option>
+                    <option value="60">60 دقيقة</option>
+                    <option value="end">نهاية الفصل الحالي</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="timer-status" class="timer-status"></div>
+
+        <div class="playlist">
+            <div class="playlist-header">
+                <h3>قائمة الفصول</h3>
+                <button id="btn-clear-progress" class="btn-small">إعادة ضبط التقدم</button>
+            </div>
+            <ul id="track-list"></ul>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
