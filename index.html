@@ -3,74 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشغل الكتب الصوتية</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4f46e5">
+    <title>مكتبتي الصوتية</title>
+    <style>
+        :root {
+            --bg-color: #090d16;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+        }
+        .app-wrapper { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; }
+        .app-header h1 { font-size: 1.15rem; font-weight: 700; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .actions-top { display: flex; gap: 6px; }
+        .btn-icon { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+        .btn-icon.primary { background: var(--primary); border: none; }
+        .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
+        .book-meta { text-align: center; margin-bottom: 16px; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; background: rgba(148, 163, 184, 0.15); color: var(--text-muted); margin-bottom: 8px; }
+        .badge.playing { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .badge.completed { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
+        .book-meta h2 { font-size: 1rem; font-weight: 600; color: var(--text-main); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .progress-container { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 0.75rem; color: var(--text-muted); }
+        .progress-container input[type="range"] { flex: 1; accent-color: var(--primary); cursor: pointer; height: 4px; border-radius: 2px; }
+        .main-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .control-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px 16px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+        .control-btn.main-play { background: var(--primary); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
+        .extra-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(15, 23, 42, 0.4); padding: 10px; border-radius: 12px; }
+        .select-wrapper { display: flex; flex-direction: column; gap: 4px; }
+        .select-wrapper label { font-size: 0.7rem; color: var(--text-muted); }
+        .select-wrapper select { background: transparent; border: none; color: var(--text-main); font-size: 0.8rem; font-weight: 600; outline: none; cursor: pointer; }
+        .timer-alert { text-align: center; font-size: 0.75rem; color: #fbbf24; margin-top: 8px; min-height: 14px; }
+        .playlist-section { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; flex: 1; display: flex; flex-direction: column; }
+        .playlist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .playlist-header h3 { font-size: 0.9rem; font-weight: 600; }
+        .text-btn { background: none; border: none; color: var(--text-muted); font-size: 0.7rem; cursor: pointer; }
+        #track-list { list-style: none; max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+        .empty-state { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px; }
+        #track-list li { padding: 10px 12px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; cursor: pointer; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        #track-list li.active { background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4); color: #818cf8; font-weight: 600; }
+        .track-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 65%; }
+        .track-state { font-size: 0.7rem; color: var(--text-muted); }
+    </style>
 </head>
 <body>
-    <div class="player-container">
-        <h1>📚 مشغل الكتب الصوتية</h1>
+    <div class="app-wrapper">
+        <header class="app-header">
+            <h1>🎧 مكتبة الكتب الصوتية</h1>
+            <div class="actions-top">
+                <label class="btn-icon" title="اختر ملفات">
+                    ➕ ملفات
+                    <input type="file" id="file-input" accept="audio/*" multiple hidden>
+                </label>
+                <label class="btn-icon primary" title="اختر مجلد كتاب">
+                    📁 مجلد كتاب
+                    <input type="file" id="folder-input" accept="audio/*" webkitdirectory directory multiple hidden>
+                </label>
+            </div>
+        </header>
 
-        <div class="file-picker-section">
-            <label class="btn-upload">
-                📂 اختر ملفات صوتية من جهازك
-                <input type="file" id="file-input" accept="audio/*" multiple style="display: none;">
-            </label>
-            <label class="btn-upload btn-folder">
-                📁 اختر مجلد كتاب كامل
-                <input type="file" id="folder-input" accept="audio/*" webkitdirectory directory multiple style="display: none;">
-            </label>
-        </div>
-
-        <div class="book-info">
-            <h2 id="chapter-title">قم بفتح ملفات صوتية للبدء</h2>
-            <div id="status-badge" class="badge">لم يبدأ</div>
-        </div>
-
-        <audio id="audio-player" controls></audio>
-
-        <div class="seek-buttons">
-            <button id="btn-rewind">⏪ 10 ثوانٍ</button>
-            <button id="btn-forward">10 ثوانٍ ⏩</button>
-        </div>
-
-        <div class="controls-extra">
-            <div class="control-item">
-                <label for="speed-select">السرعة:</label>
-                <select id="speed-select">
-                    <option value="0.75">0.75x</option>
-                    <option value="1" selected>1x</option>
-                    <option value="1.25">1.25x</option>
-                    <option value="1.5">1.5x</option>
-                    <option value="2">2x</option>
-                </select>
+        <main class="player-card">
+            <div class="book-meta">
+                <div id="status-badge" class="badge">جاهز للتشغيل</div>
+                <h2 id="chapter-title">اختر كتاباً أو مجلداً للبدء</h2>
             </div>
 
-            <div class="control-item">
-                <label for="timer-select">⏱️ المؤقت:</label>
-                <select id="timer-select">
-                    <option value="0">مغلق</option>
-                    <option value="5">5 دقائق</option>
-                    <option value="15">15 دقيقة</option>
-                    <option value="30">30 دقيقة</option>
-                    <option value="60">60 دقيقة</option>
-                    <option value="end">نهاية الفصل الحالي</option>
-                </select>
+            <audio id="audio-player"></audio>
+
+            <div class="progress-container">
+                <span id="current-time">00:00</span>
+                <input type="range" id="seek-slider" value="0" max="100" step="0.1">
+                <span id="total-duration">00:00</span>
             </div>
-        </div>
 
-        <div id="timer-status" class="timer-status"></div>
+            <div class="main-controls">
+                <button id="btn-rewind" class="control-btn">⏪ 10s</button>
+                <button id="btn-play-pause" class="control-btn main-play">▶</button>
+                <button id="btn-forward" class="control-btn">10s ⏩</button>
+            </div>
 
-        <div class="playlist">
+            <div class="extra-controls">
+                <div class="select-wrapper">
+                    <label>⚡ السرعة</label>
+                    <select id="speed-select">
+                        <option value="0.75">0.75x</option>
+                        <option value="1" selected>1.0x</option>
+                        <option value="1.25">1.25x</option>
+                        <option value="1.5">1.5x</option>
+                        <option value="2.0">2.0x</option>
+                    </select>
+                </div>
+
+                <div class="select-wrapper">
+                    <label>⏱️ مؤقت النوم</label>
+                    <select id="timer-select">
+                        <option value="0">مغلق</option>
+                        <option value="15">15 دقيقة</option>
+                        <option value="30">30 دقيقة</option>
+                        <option value="60">ساعة</option>
+                        <option value="end">نهاية الفصل</option>
+                    </select>
+                </div>
+            </div>
+            <div id="timer-status" class="timer-alert"></div>
+        </main>
+
+        <section class="playlist-section">
             <div class="playlist-header">
-                <h3>قائمة الفصول</h3>
-                <button id="btn-clear-progress" class="btn-small">إعادة ضبط التقدم</button>
+                <h3>فصول الكتاب</h3>
+                <button id="btn-clear-progress" class="text-btn">تصفير التقدم</button>
             </div>
-            <ul id="track-list"></ul>
-        </div>
+            <ul id="track-list">
+                <li class="empty-state">لم يتم اختيار أي ملفات صوتية بعد...</li>
+            </ul>
+        </section>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        const audioPlayer = document.getElementById('audio-player');
+        const chapterTitle = document.getElementById('chapter-title');
+        const statusBadge = document.getElementById('status-badge');
+        const trackList = document.getElementById('track-list');
+        const speedSelect = document.getElementById('speed-select');
+        const timerSelect = document.getElementById('timer-select');
+        const timerStatus = document.getElementById('timer-status');
+
+        const fileInput = document.getElementById('file-input');
+        const folderInput = document.getElementById('folder-input');
+        const btnClearProgress = document.getElementById('btn-clear-progress');
+        const btnPlayPause = document.getElementById('btn-play-pause');
+        const btnRewind = document.getElementById('btn-rewind');
+        const btnForward = document.getElementById('btn-forward');
+        const seekSlider = document.getElementById('seek-slider');
+        const currentTimeEl = document.getElementById('current-time');
+        const totalDurationEl = document.getElementById('total-duration');
+
+        let playlist = [];
+        let currentTrackIndex = 0;
+        let sleepTimerInterval = null;
+        let stopAtChapterEnd = false;
+
+        fileInput.addEventListener('change', (e) => handleFiles(Array.from(e.target.files)));
+        folderInput.addEventListener('change', (e) => handleFiles(Array.from(e.target.files)));
+
+        function handleFiles(files) {
+            const audioFiles = files
+                .filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i))
+                .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+
+            if (audioFiles.length === 0) {
+                alert("لم يتم العثور على ملفات صوتية صالحة.");
+                return;
+            }
+
+            playlist = audioFiles.map(file => ({
+                title: file.name.replace(/\.[^/.]+$/, ""),
+                url: URL.createObjectURL(file)
+            }));
+
+            currentTrackIndex = 0;
+            renderPlaylist();
+            playTrack(0);
+        }
+
+        function getTrackProgress(title) {
+            const savedTime = parseFloat(localStorage.getItem(`audio_pos_${title}`) || "0");
+            const isCompleted = localStorage.getItem(`audio_done_${title}`) === "true";
+            return { savedTime, isCompleted };
+        }
+
+        function renderPlaylist() {
+            trackList.innerHTML = '';
+            playlist.forEach((track, index) => {
+                const li = document.createElement('li');
+                const { savedTime, isCompleted } = getTrackProgress(track.title);
+                if (index === currentTrackIndex) li.classList.add('active');
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'track-title';
+                nameSpan.textContent = track.title;
+
+                const stateSpan = document.createElement('span');
+                stateSpan.className = 'track-state';
+
+                if (isCompleted) {
+                    stateSpan.textContent = '✔ مكتمل';
+                    stateSpan.style.color = '#10b981';
+                } else if (savedTime > 5) {
+                    const mins = Math.floor(savedTime / 60);
+                    stateSpan.textContent = `⏸ ${mins}د`;
+                    stateSpan.style.color = '#f59e0b';
+                } else {
+                    stateSpan.textContent = 'جديد';
+                }
+
+                li.appendChild(nameSpan);
+                li.appendChild(stateSpan);
+                li.addEventListener('click', () => playTrack(index));
+                trackList.appendChild(li);
+            });
+        }
+
+        function playTrack(index) {
+            if (playlist.length === 0) return;
+            currentTrackIndex = index;
+            const track = playlist[index];
+            chapterTitle.textContent = track.title;
+            audioPlayer.src = track.url;
+
+            const { savedTime, isCompleted } = getTrackProgress(track.title);
+            if (savedTime && !isCompleted) audioPlayer.currentTime = savedTime;
+
+            audioPlayer.play().catch(() => {});
+            btnPlayPause.textContent = "⏸";
+            renderPlaylist();
+        }
+
+        btnPlayPause.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                btnPlayPause.textContent = "⏸";
+            } else {
+                audioPlayer.pause();
+                btnPlayPause.textContent = "▶";
+            }
+        });
+
+        audioPlayer.addEventListener('play', () => btnPlayPause.textContent = "⏸");
+        audioPlayer.addEventListener('pause', () => btnPlayPause.textContent = "▶");
+
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            totalDurationEl.textContent = formatTime(audioPlayer.duration);
+            seekSlider.max = audioPlayer.duration;
+        });
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            if (!playlist[currentTrackIndex]) return;
+            const title = playlist[currentTrackIndex].title;
+            const currentTime = audioPlayer.currentTime;
+            const duration = audioPlayer.duration;
+
+            seekSlider.value = currentTime;
+            currentTimeEl.textContent = formatTime(currentTime);
+
+            if (currentTime > 0) {
+                localStorage.setItem(`audio_pos_${title}`, currentTime);
+                if (duration > 0 && (currentTime / duration) >= 0.95) {
+                    localStorage.setItem(`audio_done_${title}`, "true");
+                }
+            }
+        });
+
+        seekSlider.addEventListener('input', () => { audioPlayer.currentTime = seekSlider.value; });
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        btnRewind.addEventListener('click', () => audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10));
+        btnForward.addEventListener('click', () => audioPlayer.currentTime = Math.min(audioPlayer.duration || 0, audioPlayer.currentTime + 10));
+        speedSelect.addEventListener('change', (e) => audioPlayer.playbackRate = parseFloat(e.target.value));
+
+        audioPlayer.addEventListener('ended', () => {
+            if (playlist[currentTrackIndex]) {
+                localStorage.setItem(`audio_done_${playlist[currentTrackIndex].title}`, "true");
+            }
+            renderPlaylist();
+            if (currentTrackIndex < playlist.length - 1) playTrack(currentTrackIndex + 1);
+        });
+
+        btnClearProgress.addEventListener('click', () => {
+            if (confirm("هل تريد تصفير تقدم الاستماع؟")) {
+                playlist.forEach(t => {
+                    localStorage.removeItem(`audio_pos_${t.title}`);
+                    localStorage.removeItem(`audio_done_${t.title}`);
+                });
+                renderPlaylist();
+            }
+        });
+    </script>
 </body>
 </html>
