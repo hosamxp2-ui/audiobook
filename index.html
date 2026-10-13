@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبتي الصوتية</title>
+    <title>المكتبة الصوتية الذكية المتقدمة</title>
     <style>
         :root {
             --bg-color: #090d16;
-            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-bg: rgba(30, 41, 59, 0.75);
             --card-border: rgba(255, 255, 255, 0.08);
             --primary: #6366f1;
             --primary-hover: #4f46e5;
@@ -25,60 +25,113 @@
             justify-content: center;
             padding: 12px;
         }
-        .app-wrapper { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
-        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; }
-        .app-header h1 { font-size: 1.15rem; font-weight: 700; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .actions-top { display: flex; gap: 6px; }
-        .btn-icon { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
-        .btn-icon.primary { background: var(--primary); border: none; }
-        .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
-        .book-meta { text-align: center; margin-bottom: 16px; }
-        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; background: rgba(148, 163, 184, 0.15); color: var(--text-muted); margin-bottom: 8px; }
+        .app-wrapper { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 14px; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 2px; }
+        .app-header h1 { font-size: 1.1rem; font-weight: 700; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* شريط التنقل بين الأقسام */
+        .nav-tabs { display: flex; background: rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 4px; gap: 4px; border: 1px solid var(--card-border); }
+        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 8px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .tab-btn.active { background: var(--primary); color: white; }
+
+        .section-view { display: none; flex-direction: column; gap: 12px; }
+        .section-view.active { display: flex; }
+
+        .actions-bar { display: flex; gap: 8px; }
+        .btn-action { flex: 1; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: center; }
+        .btn-action.primary { background: var(--primary); border: none; }
+
+        /* بطاقة التشغيل */
+        .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 18px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
+        .book-meta { text-align: center; margin-bottom: 14px; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; background: rgba(148, 163, 184, 0.15); color: var(--text-muted); margin-bottom: 6px; }
         .badge.playing { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
         .badge.completed { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
-        .book-meta h2 { font-size: 1rem; font-weight: 600; color: var(--text-main); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .progress-container { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 0.75rem; color: var(--text-muted); }
+        .book-meta h2 { font-size: 0.95rem; font-weight: 600; color: var(--text-main); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .progress-container { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 0.75rem; color: var(--text-muted); }
         .progress-container input[type="range"] { flex: 1; accent-color: var(--primary); cursor: pointer; height: 4px; border-radius: 2px; }
-        .main-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-bottom: 16px; }
-        .control-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px 16px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
-        .control-btn.main-play { background: var(--primary); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
-        .extra-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(15, 23, 42, 0.4); padding: 10px; border-radius: 12px; }
-        .select-wrapper { display: flex; flex-direction: column; gap: 4px; }
-        .select-wrapper label { font-size: 0.7rem; color: var(--text-muted); }
-        .select-wrapper select { background: transparent; border: none; color: var(--text-main); font-size: 0.8rem; font-weight: 600; outline: none; cursor: pointer; }
-        .timer-alert { text-align: center; font-size: 0.75rem; color: #fbbf24; margin-top: 8px; min-height: 14px; }
-        .playlist-section { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; flex: 1; display: flex; flex-direction: column; }
-        .playlist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .playlist-header h3 { font-size: 0.9rem; font-weight: 600; }
-        .text-btn { background: none; border: none; color: var(--text-muted); font-size: 0.7rem; cursor: pointer; }
-        #track-list { list-style: none; max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-        .empty-state { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px; }
-        #track-list li { padding: 10px 12px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; cursor: pointer; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
-        #track-list li.active { background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4); color: #818cf8; font-weight: 600; }
-        .track-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 65%; }
-        .track-state { font-size: 0.7rem; color: var(--text-muted); }
+
+        .main-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-bottom: 14px; }
+        .control-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px 14px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+        .control-btn.main-play { background: var(--primary); border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+
+        .extra-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(15, 23, 42, 0.4); padding: 8px; border-radius: 10px; }
+        .select-wrapper { display: flex; flex-direction: column; gap: 2px; }
+        .select-wrapper label { font-size: 0.65rem; color: var(--text-muted); }
+        .select-wrapper select { background: transparent; border: none; color: var(--text-main); font-size: 0.75rem; font-weight: 600; outline: none; cursor: pointer; }
+        .timer-alert { text-align: center; font-size: 0.7rem; color: #fbbf24; margin-top: 6px; min-height: 12px; }
+
+        /* القوائم */
+        .list-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 14px; flex: 1; display: flex; flex-direction: column; max-height: 290px; }
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .list-header h3 { font-size: 0.85rem; font-weight: 600; }
+        .breadcrumb { font-size: 0.75rem; color: var(--primary); cursor: pointer; margin-bottom: 6px; display: none; }
+        
+        ul { list-style: none; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+        ul::-webkit-scrollbar { width: 4px; }
+        ul::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+
+        .empty-state { text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 15px; }
+
+        li.item-row { padding: 10px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; cursor: pointer; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; }
+        li.item-row:hover { background: rgba(255, 255, 255, 0.06); }
+        li.item-row.active { background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); color: #818cf8; font-weight: 600; }
+        .item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 55%; }
+        .item-meta { font-size: 0.7rem; color: var(--text-muted); text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
     </style>
 </head>
 <body>
     <div class="app-wrapper">
         <header class="app-header">
-            <h1>🎧 مكتبة الكتب الصوتية</h1>
-            <div class="actions-top">
-                <label class="btn-icon" title="اختر ملفات">
-                    ➕ ملفات
-                    <input type="file" id="file-input" accept="audio/*" multiple hidden>
-                </label>
-                <label class="btn-icon primary" title="اختر مجلد كتاب">
-                    📁 مجلد كتاب
+            <h1>🎧 المكتبة الصوتية الذكية</h1>
+            <button id="btn-clear-db" class="btn-action" style="padding: 4px 8px; font-size: 0.7rem;">إعادة ضبط الكل</button>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('books')">📚 قسم الكتب (المجلدات)</button>
+            <button class="tab-btn" onclick="switchTab('files')">📁 قسم الملفات الفردية</button>
+        </nav>
+
+        <div id="view-books" class="section-view active">
+            <div class="actions-bar">
+                <label class="btn-action primary">
+                    📁 إضافة مجلد كتاب جديد
                     <input type="file" id="folder-input" accept="audio/*" webkitdirectory directory multiple hidden>
                 </label>
             </div>
-        </header>
+            <div class="list-card">
+                <div class="list-header">
+                    <h3 id="books-header-title">الكتب المضافة</h3>
+                    <span id="back-to-books" class="breadcrumb" onclick="showBooksList()">⬅ العودة للكتب</span>
+                </div>
+                <ul id="books-list">
+                    <li class="empty-state">لم تقم بإضافة أي كتب أو مجلدات بعد.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="view-files" class="section-view">
+            <div class="actions-bar">
+                <label class="btn-action primary">
+                    ➕ إضافة ملفات صوتية
+                    <input type="file" id="file-input" accept="audio/*" multiple hidden>
+                </label>
+            </div>
+            <div class="list-card">
+                <div class="list-header">
+                    <h3>قائمة الملفات</h3>
+                </div>
+                <ul id="files-list">
+                    <li class="empty-state">لم تقم بإضافة ملفات فردية بعد.</li>
+                </ul>
+            </div>
+        </div>
 
         <main class="player-card">
             <div class="book-meta">
                 <div id="status-badge" class="badge">جاهز للتشغيل</div>
-                <h2 id="chapter-title">اختر كتاباً أو مجلداً للبدء</h2>
+                <h2 id="chapter-title">اختر كتاباً أو ملفاً للبدء</h2>
             </div>
 
             <audio id="audio-player"></audio>
@@ -120,116 +173,283 @@
             </div>
             <div id="timer-status" class="timer-alert"></div>
         </main>
-
-        <section class="playlist-section">
-            <div class="playlist-header">
-                <h3>فصول الكتاب</h3>
-                <button id="btn-clear-progress" class="text-btn">تصفير التقدم</button>
-            </div>
-            <ul id="track-list">
-                <li class="empty-state">لم يتم اختيار أي ملفات صوتية بعد...</li>
-            </ul>
-        </section>
     </div>
 
     <script>
         const audioPlayer = document.getElementById('audio-player');
         const chapterTitle = document.getElementById('chapter-title');
         const statusBadge = document.getElementById('status-badge');
-        const trackList = document.getElementById('track-list');
+        const booksList = document.getElementById('books-list');
+        const filesList = document.getElementById('files-list');
+        const booksHeaderTitle = document.getElementById('books-header-title');
+        const backToBooks = document.getElementById('back-to-books');
+        
+        const folderInput = document.getElementById('folder-input');
+        const fileInput = document.getElementById('file-input');
         const speedSelect = document.getElementById('speed-select');
         const timerSelect = document.getElementById('timer-select');
         const timerStatus = document.getElementById('timer-status');
-
-        const fileInput = document.getElementById('file-input');
-        const folderInput = document.getElementById('folder-input');
-        const btnClearProgress = document.getElementById('btn-clear-progress');
         const btnPlayPause = document.getElementById('btn-play-pause');
         const btnRewind = document.getElementById('btn-rewind');
         const btnForward = document.getElementById('btn-forward');
         const seekSlider = document.getElementById('seek-slider');
         const currentTimeEl = document.getElementById('current-time');
         const totalDurationEl = document.getElementById('total-duration');
+        const btnClearDb = document.getElementById('btn-clear-db');
 
-        let playlist = [];
-        let currentTrackIndex = 0;
-        let sleepTimerInterval = null;
-        let stopAtChapterEnd = false;
+        let db;
+        let currentBooks = [];
+        let currentFiles = [];
+        let activeBook = null;
+        let currentTrackId = null;
+        let currentTrackUrl = null;
+        let currentSourceType = 'file';
 
-        fileInput.addEventListener('change', (e) => handleFiles(Array.from(e.target.files)));
-        folderInput.addEventListener('change', (e) => handleFiles(Array.from(e.target.files)));
+        const request = indexedDB.open('SmartAudiobooksDB_v2', 1);
+        request.onerror = () => console.error("IndexedDB error");
+        request.onsuccess = (e) => {
+            db = e.target.result;
+            loadAppData();
+        };
+        request.onupgradeneeded = (e) => {
+            db = e.target.result;
+            if (!db.objectStoreNames.contains('books')) db.createObjectStore('books', { keyPath: 'id' });
+            if (!db.objectStoreNames.contains('files')) db.createObjectStore('files', { keyPath: 'id' });
+            if (!db.objectStoreNames.contains('state')) db.createObjectStore('state', { keyPath: 'key' });
+        };
 
-        function handleFiles(files) {
-            const audioFiles = files
-                .filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i))
-                .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
+            if (tab === 'books') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('view-books').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('view-files').classList.add('active');
+            }
+        }
 
-            if (audioFiles.length === 0) {
-                alert("لم يتم العثور على ملفات صوتية صالحة.");
+        folderInput.addEventListener('change', async (e) => {
+            const files = Array.from(e.target.files).filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i));
+            if (files.length === 0) return;
+
+            let folderName = "كتاب صوتي جديد " + new Date().toLocaleDateString('ar-EG');
+            if (files[0].webkitRelativePath) {
+                const parts = files[0].webkitRelativePath.split('/');
+                if (parts.length > 1) folderName = parts[0];
+            }
+
+            const bookId = 'book_' + Date.now();
+            const bookTracks = files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }))
+                .map((file, idx) => ({
+                    id: bookId + '_t_' + idx,
+                    title: file.name.replace(/\.[^/.]+$/, ""),
+                    file: file
+                }));
+
+            const newBook = { id: bookId, name: folderName, tracks: bookTracks };
+            const tx = db.transaction(['books'], 'readwrite');
+            tx.objectStore('books').put(newBook);
+            tx.oncomplete = () => loadAppData();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files).filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i));
+            if (files.length === 0) return;
+
+            const tx = db.transaction(['files'], 'readwrite');
+            const store = tx.objectStore('files');
+            files.forEach((file, idx) => {
+                const fileObj = {
+                    id: 'file_' + Date.now() + '_' + idx,
+                    title: file.name.replace(/\.[^/.]+$/, ""),
+                    file: file
+                };
+                store.put(fileObj);
+            });
+            tx.oncomplete = () => loadAppData();
+        });
+
+        function loadAppData() {
+            if (!db) return;
+            db.transaction(['books'], 'readonly').objectStore('books').getAll().onsuccess = (e) => {
+                currentBooks = e.target.result;
+                if (!activeBook) renderBooksList();
+            };
+
+            db.transaction(['files'], 'readonly').objectStore('files').getAll().onsuccess = (e) => {
+                currentFiles = e.target.result;
+                renderFilesList();
+            };
+
+            db.transaction(['state'], 'readonly').objectStore('state').get('last_state').onsuccess = (e) => {
+                const state = e.target.result;
+                if (state && !audioPlayer.src) restoreState(state);
+            };
+        }
+
+        function renderBooksList() {
+            booksHeaderTitle.textContent = "الكتب والمجلدات";
+            backToBooks.style.display = "none";
+            booksList.innerHTML = '';
+            
+            if (currentBooks.length === 0) {
+                booksList.innerHTML = '<li class="empty-state">لم تقم بإضافة أي كتب أو مجلدات بعد.</li>';
                 return;
             }
 
-            playlist = audioFiles.map(file => ({
-                title: file.name.replace(/\.[^/.]+$/, ""),
-                url: URL.createObjectURL(file)
-            }));
-
-            currentTrackIndex = 0;
-            renderPlaylist();
-            playTrack(0);
-        }
-
-        function getTrackProgress(title) {
-            const savedTime = parseFloat(localStorage.getItem(`audio_pos_${title}`) || "0");
-            const isCompleted = localStorage.getItem(`audio_done_${title}`) === "true";
-            return { savedTime, isCompleted };
-        }
-
-        function renderPlaylist() {
-            trackList.innerHTML = '';
-            playlist.forEach((track, index) => {
+            currentBooks.forEach(book => {
                 const li = document.createElement('li');
-                const { savedTime, isCompleted } = getTrackProgress(track.title);
-                if (index === currentTrackIndex) li.classList.add('active');
-
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'track-title';
-                nameSpan.textContent = track.title;
-
-                const stateSpan = document.createElement('span');
-                stateSpan.className = 'track-state';
-
-                if (isCompleted) {
-                    stateSpan.textContent = '✔ مكتمل';
-                    stateSpan.style.color = '#10b981';
-                } else if (savedTime > 5) {
-                    const mins = Math.floor(savedTime / 60);
-                    stateSpan.textContent = `⏸ ${mins}د`;
-                    stateSpan.style.color = '#f59e0b';
-                } else {
-                    stateSpan.textContent = 'جديد';
-                }
-
-                li.appendChild(nameSpan);
-                li.appendChild(stateSpan);
-                li.addEventListener('click', () => playTrack(index));
-                trackList.appendChild(li);
+                li.className = 'item-row';
+                li.innerHTML = `<span class="item-title">📁 ${book.name}</span><span class="item-meta">${book.tracks.length} فصل</span>`;
+                li.onclick = () => openBook(book);
+                booksList.appendChild(li);
             });
         }
 
-        function playTrack(index) {
-            if (playlist.length === 0) return;
-            currentTrackIndex = index;
-            const track = playlist[index];
-            chapterTitle.textContent = track.title;
-            audioPlayer.src = track.url;
+        function openBook(book) {
+            activeBook = book;
+            booksHeaderTitle.textContent = book.name;
+            backToBooks.style.display = "inline-block";
+            booksList.innerHTML = '';
 
-            const { savedTime, isCompleted } = getTrackProgress(track.title);
-            if (savedTime && !isCompleted) audioPlayer.currentTime = savedTime;
+            book.tracks.forEach((track) => {
+                const li = document.createElement('li');
+                li.className = 'item-row';
+                if (track.id === currentTrackId) li.classList.add('active');
+
+                const savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
+                const duration = parseFloat(localStorage.getItem(`dur_${track.id}`) || 0);
+                const isDone = localStorage.getItem(`done_${track.id}`) === "true";
+                
+                let percent = 0;
+                if (duration > 0) percent = Math.min(100, Math.floor((savedTime / duration) * 100));
+                if (isDone) percent = 100;
+
+                let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
+                metaHtml += `<span style="color:${isDone ? '#10b981' : '#f59e0b'}">${percent}% ${isDone ? '✔' : ''}</span>`;
+
+                li.innerHTML = `<span class="item-title">${track.title}</span><div class="item-meta">${metaHtml}</div>`;
+                li.onclick = () => playTrack(track, 'book', book);
+                booksList.appendChild(li);
+            });
+        }
+
+        function showBooksList() {
+            activeBook = null;
+            renderBooksList();
+        }
+
+        function renderFilesList() {
+            filesList.innerHTML = '';
+            if (currentFiles.length === 0) {
+                filesList.innerHTML = '<li class="empty-state">لم تقم بإضافة ملفات فردية بعد.</li>';
+                return;
+            }
+
+            currentFiles.forEach(track => {
+                const li = document.createElement('li');
+                li.className = 'item-row';
+                if (track.id === currentTrackId) li.classList.add('active');
+
+                const savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
+                const duration = parseFloat(localStorage.getItem(`dur_${track.id}`) || 0);
+                const isDone = localStorage.getItem(`done_${track.id}`) === "true";
+                
+                let percent = 0;
+                if (duration > 0) percent = Math.min(100, Math.floor((savedTime / duration) * 100));
+                if (isDone) percent = 100;
+
+                let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
+                metaHtml += `<span style="color:${isDone ? '#10b981' : '#f59e0b'}">${percent}% ${isDone ? '✔' : ''}</span>`;
+
+                li.innerHTML = `<span class="item-title">🎵 ${track.title}</span><div class="item-meta">${metaHtml}</div>`;
+                li.onclick = () => playTrack(track, 'file');
+                filesList.appendChild(li);
+            });
+        }
+
+        function playTrack(track, type, bookContext = null) {
+            currentTrackId = track.id;
+            currentSourceType = type;
+            if (currentTrackUrl) URL.revokeObjectURL(currentTrackUrl);
+            
+            currentTrackUrl = URL.createObjectURL(track.file);
+            audioPlayer.src = currentTrackUrl;
+            chapterTitle.textContent = track.title;
+
+            const savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
+            const isDone = localStorage.getItem(`done_${track.id}`) === "true";
+            
+            if (savedTime && !isDone) audioPlayer.currentTime = savedTime;
 
             audioPlayer.play().catch(() => {});
             btnPlayPause.textContent = "⏸";
-            renderPlaylist();
+            updateBadge(isDone, savedTime);
+
+            if (type === 'book' && bookContext) openBook(bookContext);
+            else renderFilesList();
+
+            saveCurrentState();
+        }
+
+        function updateBadge(isCompleted, currentTime) {
+            if (isCompleted) {
+                statusBadge.textContent = "✔ مكتمل";
+                statusBadge.className = "badge completed";
+            } else if (currentTime > 5) {
+                statusBadge.textContent = "🎧 جاري الاستماع";
+                statusBadge.className = "badge playing";
+            } else {
+                statusBadge.textContent = "جاهز";
+                statusBadge.className = "badge";
+            }
+        }
+
+        function saveCurrentState() {
+            if (!currentTrackId) return;
+            const state = {
+                key: 'last_state',
+                trackId: currentTrackId,
+                currentTime: audioPlayer.currentTime,
+                sourceType: currentSourceType,
+                bookId: activeBook ? activeBook.id : null
+            };
+            db.transaction(['state'], 'readwrite').objectStore('state').put(state);
+        }
+
+        function restoreState(state) {
+            currentTrackId = state.trackId;
+            currentSourceType = state.sourceType;
+            
+            if (state.sourceType === 'book' && state.bookId) {
+                db.transaction(['books'], 'readonly').objectStore('books').get(state.bookId).onsuccess = (e) => {
+                    activeBook = e.target.result;
+                    if (activeBook) {
+                        const foundTrack = activeBook.tracks.find(t => t.id === state.trackId);
+                        if (foundTrack) setupRestoredTrack(foundTrack, state.currentTime);
+                    }
+                };
+            } else {
+                db.transaction(['files'], 'readonly').objectStore('files').get(state.trackId).onsuccess = (e) => {
+                    const foundTrack = e.target.result;
+                    if (foundTrack) setupRestoredTrack(foundTrack, state.currentTime);
+                };
+            }
+        }
+
+        function setupRestoredTrack(track, time) {
+            if (currentTrackUrl) URL.revokeObjectURL(currentTrackUrl);
+            currentTrackUrl = URL.createObjectURL(track.file);
+            audioPlayer.src = currentTrackUrl;
+            chapterTitle.textContent = track.title;
+            audioPlayer.currentTime = time;
+            
+            const isDone = localStorage.getItem(`done_${track.id}`) === "true";
+            updateBadge(isDone, time);
+            if (activeBook) openBook(activeBook);
+            else renderFilesList();
         }
 
         btnPlayPause.addEventListener('click', () => {
@@ -248,11 +468,13 @@
         audioPlayer.addEventListener('loadedmetadata', () => {
             totalDurationEl.textContent = formatTime(audioPlayer.duration);
             seekSlider.max = audioPlayer.duration;
+            if (currentTrackId) {
+                localStorage.setItem(`dur_${currentTrackId}`, audioPlayer.duration);
+            }
         });
 
         audioPlayer.addEventListener('timeupdate', () => {
-            if (!playlist[currentTrackIndex]) return;
-            const title = playlist[currentTrackIndex].title;
+            if (!currentTrackId) return;
             const currentTime = audioPlayer.currentTime;
             const duration = audioPlayer.duration;
 
@@ -260,17 +482,28 @@
             currentTimeEl.textContent = formatTime(currentTime);
 
             if (currentTime > 0) {
-                localStorage.setItem(`audio_pos_${title}`, currentTime);
-                if (duration > 0 && (currentTime / duration) >= 0.95) {
-                    localStorage.setItem(`audio_done_${title}`, "true");
+                localStorage.setItem(`pos_${currentTrackId}`, currentTime);
+                if (!isNaN(duration) && duration > 0) {
+                    localStorage.setItem(`dur_${currentTrackId}`, duration);
+                    if ((currentTime / duration) >= 0.95) {
+                        localStorage.setItem(`done_${currentTrackId}`, "true");
+                        updateBadge(true, currentTime);
+                    } else {
+                        updateBadge(false, currentTime);
+                    }
                 }
+                saveCurrentState();
+                
+                // تحديث واجهة القائمة الحية للوقت والنسبة
+                if (activeBook) openBook(activeBook);
+                else renderFilesList();
             }
         });
 
         seekSlider.addEventListener('input', () => { audioPlayer.currentTime = seekSlider.value; });
 
         function formatTime(seconds) {
-            if (isNaN(seconds)) return "00:00";
+            if (isNaN(seconds) || seconds <= 0) return "00:00";
             const mins = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
             return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
@@ -281,20 +514,25 @@
         speedSelect.addEventListener('change', (e) => audioPlayer.playbackRate = parseFloat(e.target.value));
 
         audioPlayer.addEventListener('ended', () => {
-            if (playlist[currentTrackIndex]) {
-                localStorage.setItem(`audio_done_${playlist[currentTrackIndex].title}`, "true");
+            if (currentTrackId) {
+                localStorage.setItem(`done_${currentTrackId}`, "true");
             }
-            renderPlaylist();
-            if (currentTrackIndex < playlist.length - 1) playTrack(currentTrackIndex + 1);
+            if (activeBook) {
+                openBook(activeBook);
+                const currentIndex = activeBook.tracks.findIndex(t => t.id === currentTrackId);
+                if (currentIndex >= 0 && currentIndex < activeBook.tracks.length - 1) {
+                    playTrack(activeBook.tracks[currentIndex + 1], 'book', activeBook);
+                }
+            } else {
+                renderFilesList();
+            }
         });
 
-        btnClearProgress.addEventListener('click', () => {
-            if (confirm("هل تريد تصفير تقدم الاستماع؟")) {
-                playlist.forEach(t => {
-                    localStorage.removeItem(`audio_pos_${t.title}`);
-                    localStorage.removeItem(`audio_done_${t.title}`);
-                });
-                renderPlaylist();
+        btnClearDb.addEventListener('click', () => {
+            if (confirm("هل تريد مسح جميع البيانات والمجلدات والتقدم؟")) {
+                indexedDB.deleteDatabase('SmartAudiobooksDB_v2');
+                localStorage.clear();
+                location.reload();
             }
         });
     </script>
