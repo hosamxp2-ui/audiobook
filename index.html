@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الصوتية والبودكاست الاحترافية</title>
+    <title>المكتبة الصوتية الاحترافية</title>
     <style>
         :root[data-theme="dark"] {
             --bg-color: #07090e;
@@ -45,7 +45,6 @@
         .app-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 4px; }
         .app-header h1 { font-size: 1.1rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* نظام الأقسام القابلة للطي (Accordion) */
         .accordion-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
         .accordion-header { background: var(--input-bg); padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.85rem; font-weight: 800; }
         .accordion-header:hover { background: rgba(99, 102, 241, 0.15); }
@@ -56,16 +55,12 @@
         .btn-action { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 9px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-align: center; }
         .btn-action.primary { background: linear-gradient(135deg, var(--primary), #818cf8); border: none; color: white; }
 
-        .sort-select, .search-input { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 7px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; outline: none; }
-        .search-input { flex: 1; }
-
         /* المشغل */
         .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
         .player-art-container { position: relative; width: 60px; height: 60px; margin: 0 auto 10px auto; }
         .book-cover-art {
             width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), #c084fc);
             border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
-            background-size: cover; background-position: center;
         }
 
         .book-meta { text-align: center; margin-bottom: 10px; }
@@ -102,8 +97,6 @@
         .item-meta { font-size: 0.63rem; color: var(--text-muted); text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-weight: 700; }
 
         .btn-small { background: var(--primary); color: white; border: none; padding: 3px 6px; border-radius: 5px; font-size: 0.6rem; cursor: pointer; }
-        .btn-small.accent { background: var(--accent); }
-        .online-pod-img { width: 30px; height: 30px; border-radius: 6px; object-fit: cover; }
 
         .settings-card { display: flex; flex-direction: column; gap: 8px; }
         .setting-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: 700; padding-bottom: 6px; border-bottom: 1px solid var(--card-border); }
@@ -114,11 +107,11 @@
 <body>
     <div class="app-wrapper">
         <header class="app-header">
-            <h1>🎧 المكتبة الاحترافية المطورة</h1>
+            <h1>🎧 المكتبة الصوتية الاحترافية</h1>
             <button id="btn-clear-db" class="btn-action" style="padding: 4px 8px; font-size: 0.65rem; flex:none;">إعادة ضبط</button>
         </header>
 
-        <!-- 1. قسم المجلدات ووحدات التخزين (قابل للطي) -->
+        <!-- 1. قسم المجلدات ووحدات التخزين -->
         <div id="acc-library" class="accordion-card open">
             <div class="accordion-header" onclick="toggleAccordion('acc-library')">
                 <span>📚 مكتبة المجلدات ووحدات التخزين</span>
@@ -135,7 +128,7 @@
             </div>
         </div>
 
-        <!-- 2. قسم الملفات الفردية (قابل للطي) -->
+        <!-- 2. قسم الملفات الفردية -->
         <div id="acc-files" class="accordion-card">
             <div class="accordion-header" onclick="toggleAccordion('acc-files')">
                 <span>📁 الملفات الصوتية الفردية</span>
@@ -154,47 +147,7 @@
             </div>
         </div>
 
-        <!-- 3. قسم البودكاست (قابل للطي) -->
-        <div id="acc-podcasts" class="accordion-card">
-            <div class="accordion-header" onclick="toggleAccordion('acc-podcasts')">
-                <span>🎙️ البحث والبودكاست والاشتراكات</span>
-                <span>▼</span>
-            </div>
-            <div class="accordion-body">
-                <div class="actions-bar">
-                    <input type="text" id="online-pod-query" class="search-input" placeholder="🌐 ابحث عن بودكاست أونلاين...">
-                    <button class="btn-action primary" style="flex:none; padding:7px 10px;" onclick="searchPodcastOnline()">بحث</button>
-                </div>
-                <div class="actions-bar">
-                    <button class="btn-action" onclick="showSubscriptions()">⭐ اشتراكاتي</button>
-                </div>
-                <div class="list-header" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 id="pod-section-title" style="font-size:0.75rem;">قائمة الحلقات</h3>
-                    <select id="pod-sort" class="sort-select" onchange="sortPodcastEpisodes()">
-                        <option value="date">الأحدث</option>
-                        <option value="name">الاسم</option>
-                    </select>
-                </div>
-                <ul id="podcasts-list">
-                    <li class="empty-state">ابحث عن بودكاست واستعرض حلقاته هنا.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- 4. قسم المحمّلات (قابل للطي) -->
-        <div id="acc-downloads" class="accordion-card">
-            <div class="accordion-header" onclick="toggleAccordion('acc-downloads')">
-                <span>📥 الحلقات المحمّلة</span>
-                <span>▼</span>
-            </div>
-            <div class="accordion-body">
-                <ul id="downloads-list">
-                    <li class="empty-state">لا توجد حلقات محمّلة بعد.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- 5. قسم السجل (قابل للطي) -->
+        <!-- 3. قسم السجل -->
         <div id="acc-history" class="accordion-card">
             <div class="accordion-header" onclick="toggleAccordion('acc-history')">
                 <span>🕒 سجل الاستماع الأخير</span>
@@ -207,7 +160,7 @@
             </div>
         </div>
 
-        <!-- 6. قسم الإعدادات (قابل للطي) -->
+        <!-- 4. قسم الإعدادات -->
         <div id="acc-settings" class="accordion-card">
             <div class="accordion-header" onclick="toggleAccordion('acc-settings')">
                 <span>⚙️ إعدادات التطبيق والمظهر</span>
@@ -236,10 +189,10 @@
             </div>
         </div>
 
-        <!-- المشغل الفاخر الثابت -->
+        <!-- المشغل الثابت -->
         <main class="player-card">
             <div class="player-art-container">
-                <div id="cover-art" class="book-cover-art">🎧</div>
+                <div class="book-cover-art">🎧</div>
             </div>
             <div class="book-meta">
                 <div id="status-badge" class="badge">جاهز للتشغيل</div>
@@ -290,10 +243,7 @@
         const libraryList = document.getElementById('library-list');
         const filesList = document.getElementById('files-list');
         const historyList = document.getElementById('history-list');
-        const podcastsList = document.getElementById('podcasts-list');
-        const downloadsList = document.getElementById('downloads-list');
         const breadcrumbEl = document.getElementById('breadcrumb');
-        const coverArt = document.getElementById('cover-art');
         
         const fileInput = document.getElementById('file-input');
         const speedSelect = document.getElementById('speed-select');
@@ -306,23 +256,18 @@
         const btnClearDb = document.getElementById('btn-clear-db');
         const settingTheme = document.getElementById('setting-theme');
         const settingRewind = document.getElementById('setting-rewind');
-        const settingWakeLock = document.getElementById('setting-wakelock');
-        const onlinePodQuery = document.getElementById('online-pod-query');
 
         let db;
-        let rootHandlesList = []; // دعم مجلدات متعددة دون اختفاء القديم
+        let rootHandlesList = [];
         let currentSubHandle = null;
         let currentPathStack = [];
         let currentFilesList = [];
-        let subscriptions = JSON.parse(localStorage.getItem('app_subscriptions') || '[]');
-        let downloadedEpisodes = JSON.parse(localStorage.getItem('app_downloads') || '[]');
         let historyItems = JSON.parse(localStorage.getItem('app_history') || '[]');
-        let currentActiveEpisodes = [];
+        let currentTrackUrl = null;
         let wakeLockObj = null;
 
         function toggleAccordion(id) {
-            const card = document.getElementById(id);
-            card.classList.toggle('open');
+            document.getElementById(id).classList.toggle('open');
         }
 
         function changeTheme(theme) {
@@ -343,13 +288,12 @@
             }
         }
 
-        const request = indexedDB.open('FinalAudioDB_v7', 1);
+        const request = indexedDB.open('AudioDB_Clean_v1', 1);
         request.onsuccess = async (e) => {
             db = e.target.result;
             await loadSavedDirectories();
             renderFilesList();
             renderHistoryList();
-            renderDownloadsList();
         };
         request.onupgradeneeded = (e) => {
             db = e.target.result;
@@ -366,7 +310,7 @@
             if (!db) return;
             const tx = db.transaction(['storage'], 'readonly');
             const req = tx.objectStore('storage').get('root_dirs_list');
-            req.onsuccess = async (e) => {
+            req.onsuccess = (e) => {
                 if (e.target.result && e.target.result.handles) {
                     rootHandlesList = e.target.result.handles;
                     renderRootDirectoriesMenu();
@@ -388,11 +332,11 @@
             libraryList.innerHTML = '';
             breadcrumbEl.innerHTML = '';
             if (rootHandlesList.length === 0) {
-                libraryList.innerHTML = '<li class="empty-state">لم تقم بإضافة أي مجلدات بعد. اضغط على الزر أعلاه.</li>';
+                libraryList.innerHTML = '<li class="empty-state">لم تقم بإضافة مجلدات. اضغط على الزر أعلاه.</li>';
                 return;
             }
 
-            rootHandlesList.forEach((handle, idx) => {
+            rootHandlesList.forEach((handle) => {
                 const li = document.createElement('li');
                 li.className = 'item-row';
                 li.innerHTML = `<span class="item-title">🗂️ ${handle.name}</span><button class="btn-small">استعراض ⬅</button>`;
@@ -408,7 +352,6 @@
             });
         }
 
-        // حساب نسبة الإنجاز للملفات
         function getFileProgress(fileId) {
             const savedTime = parseFloat(localStorage.getItem(`pos_${fileId}`) || 0);
             const duration = parseFloat(localStorage.getItem(`dur_${fileId}`) || 0);
@@ -440,23 +383,42 @@
             let audioFiles = [];
 
             try {
+                if ((await currentSubHandle.queryPermission({ mode: 'read' })) !== 'granted') {
+                    await currentSubHandle.requestPermission({ mode: 'read' });
+                }
                 for await (const [name, handle] of currentSubHandle.entries()) {
                     if (handle.kind === 'directory') folders.push({ name, handle });
                     else if (handle.kind === 'file' && name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i)) {
                         audioFiles.push({ name, handle });
                     }
                 }
-            } catch (err) { return; }
+            } catch (err) {
+                libraryList.innerHTML = '<li class="empty-state" style="color:var(--primary); cursor:pointer;" onclick="renderRootDirectoriesMenu()">انتهت صلاحية الإذن، اضغط هنا لإعادة التفعيل</li>';
+                return;
+            }
 
             if (folders.length === 0 && audioFiles.length === 0) {
                 libraryList.innerHTML = '<li class="empty-state">هذا المجلد فارغ.</li>';
                 return;
             }
 
+            // زر الرجوع للمستوى الأعلى إذا وجد مسار فرعي
+            if (currentPathStack.length > 1) {
+                const backLi = document.createElement('li');
+                backLi.className = 'item-row';
+                backLi.innerHTML = `<span class="item-title" style="color:var(--primary)">⬅ (الرجوع للمجلد السابق)</span>`;
+                backLi.onclick = async () => {
+                    currentPathStack.pop();
+                    currentSubHandle = currentPathStack[currentPathStack.length - 1].handle;
+                    await renderFileSystem();
+                };
+                libraryList.appendChild(backLi);
+            }
+
             folders.forEach(folder => {
                 const li = document.createElement('li');
                 li.className = 'item-row';
-                li.innerHTML = `<span class="item-title">📁 ${folder.name}</span><span class="item-meta">مجلد</span>`;
+                li.innerHTML = `<span class="item-title">📁 ${folder.name}</span><span class="item-meta">مجلد فرعي</span>`;
                 li.onclick = async () => {
                     currentPathStack.push({ name: folder.name, handle: folder.handle });
                     currentSubHandle = folder.handle;
@@ -474,122 +436,12 @@
                 const li = document.createElement('li');
                 li.className = 'item-row';
                 li.innerHTML = `<span class="item-title">🎵 ${titleClean}</span><div class="item-meta"><span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span></div>`;
-                li.onclick = async () => playFile(await fileObj.handle.getFile(), fileId, titleClean);
+                li.onclick = async () => {
+                    const fileData = await fileObj.handle.getFile();
+                    playFile(fileData, fileId, titleClean);
+                };
                 libraryList.appendChild(li);
             });
-        }
-
-        // البحث أونلاين عن البودكاست
-        async function searchPodcastOnline() {
-            const query = onlinePodQuery.value.trim();
-            if (!query) return;
-            podcastsList.innerHTML = '<li class="empty-state">جاري البحث أونلاين...</li>';
-
-            try {
-                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=podcast&limit=10`);
-                const data = await res.json();
-                podcastsList.innerHTML = '';
-
-                data.results.forEach(pod => {
-                    const li = document.createElement('li');
-                    li.className = 'item-row';
-                    li.innerHTML = `
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <img src="${pod.artworkUrl60}" class="online-pod-img">
-                            <span class="item-title">${pod.collectionName}</span>
-                        </div>
-                        <button class="btn-small">استعراض ⬅</button>`;
-                    li.onclick = () => fetchOnlineEpisodes(pod.feedUrl, pod.collectionName, pod.artworkUrl100);
-                    podcastsList.appendChild(li);
-                });
-            } catch (err) { podcastsList.innerHTML = '<li class="empty-state">تعذر البحث.</li>'; }
-        }
-
-        async function fetchOnlineEpisodes(feedUrl, podTitle, artUrl) {
-            document.getElementById('pod-section-title').textContent = podTitle;
-            podcastsList.innerHTML = '<li class="empty-state">جاري جلب الحلقات الكاملة...</li>';
-
-            try {
-                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
-                const data = await res.json();
-                podcastsList.innerHTML = '';
-
-                currentActiveEpisodes = data.items || [];
-                renderActiveEpisodesList(artUrl);
-            } catch (err) { podcastsList.innerHTML = '<li class="empty-state">تعذر جلب الحلقات.</li>'; }
-        }
-
-        function renderActiveEpisodesList(artUrl) {
-            podcastsList.innerHTML = '';
-            if (currentActiveEpisodes.length === 0) {
-                podcastsList.innerHTML = '<li class="empty-state">لا توجد حلقات.</li>';
-                return;
-            }
-
-            currentActiveEpisodes.forEach(ep => {
-                if (ep.enclosure && ep.enclosure.link) {
-                    const epId = 'online_' + ep.guid;
-                    const percent = getFileProgress(epId);
-                    const isDownloaded = downloadedEpisodes.some(d => d.id === epId);
-
-                    const li = document.createElement('li');
-                    li.className = 'item-row';
-                    li.innerHTML = `
-                        <span class="item-title">🎙️ ${ep.title}</span>
-                        <div class="item-meta">
-                            <span>${percent}%</span>
-                            <button class="btn-small ${isDownloaded ? 'accent' : ''}" onclick="event.stopPropagation(); saveDownload('${ep.title}', '${ep.enclosure.link}', '${epId}')">${isDownloaded ? '✔ محمّلة' : '📥 تحميل'}</button>
-                        </div>`;
-                    li.onclick = () => playOnlineStream(ep.enclosure.link, epId, ep.title, artUrl, ep.description);
-                    podcastsList.appendChild(li);
-                }
-            });
-        }
-
-        function sortPodcastEpisodes() {
-            const sortVal = document.getElementById('pod-sort').value;
-            currentActiveEpisodes.sort((a, b) => {
-                if (sortVal === 'name') return a.title.localeCompare(b.title);
-                return new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
-            });
-            renderActiveEpisodesList();
-        }
-
-        function saveDownload(title, link, id) {
-            if (!downloadedEpisodes.some(d => d.id === id)) {
-                downloadedEpisodes.push({ title, link, id, date: new Date().toLocaleDateString('ar-EG') });
-                localStorage.setItem('app_downloads', JSON.stringify(downloadedEpisodes));
-                renderDownloadsList();
-            }
-        }
-
-        function renderDownloadsList() {
-            downloadsList.innerHTML = '';
-            if (downloadedEpisodes.length === 0) {
-                downloadsList.innerHTML = '<li class="empty-state">لا توجد حلقات محمّلة.</li>';
-                return;
-            }
-            downloadedEpisodes.forEach(ep => {
-                const li = document.createElement('li');
-                li.className = 'item-row';
-                li.innerHTML = `<span class="item-title">📥 ${ep.title}</span><span class="item-meta">${ep.date}</span>`;
-                li.onclick = () => playOnlineStream(ep.link, ep.id, ep.title, null, null);
-                downloadsList.appendChild(li);
-            });
-        }
-
-        function playOnlineStream(url, id, title, artUrl, desc) {
-            audioPlayer.src = url;
-            chapterTitle.textContent = title;
-            audioPlayer.dataset.trackId = id;
-            if (artUrl) coverArt.style.backgroundImage = `url(${artUrl})`;
-
-            let savedTime = parseFloat(localStorage.getItem(`pos_${id}`) || 0);
-            if (savedTime) audioPlayer.currentTime = savedTime;
-
-            audioPlayer.play().catch(() => {});
-            btnPlayPause.textContent = "⏸";
-            addToHistory(title, id);
         }
 
         function playFile(file, fileId, title) {
@@ -609,13 +461,18 @@
 
         function addToHistory(title, id) {
             historyItems = historyItems.filter(item => item.id !== id);
-            historyItems.unshift({ title, id, time: new Date().toLocaleTimeString('ar-EG') });
+            historyItems.unshift({ title, id, time: new Date().toLocaleTimeString('ar-EG', {hour: '2-digit', minute:'2-digit'}) });
+            if (historyItems.length > 20) historyItems.pop();
             localStorage.setItem('app_history', JSON.stringify(historyItems));
             renderHistoryList();
         }
 
         function renderHistoryList() {
             historyList.innerHTML = '';
+            if (historyItems.length === 0) {
+                historyList.innerHTML = '<li class="empty-state">لم يتم تشغيل أي ملفات بعد.</li>';
+                return;
+            }
             historyItems.forEach(item => {
                 const li = document.createElement('li');
                 li.className = 'item-row';
@@ -658,13 +515,17 @@
             seekSlider.value = audioPlayer.currentTime;
             currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
             localStorage.setItem(`pos_${tid}`, audioPlayer.currentTime);
+            if (audioPlayer.duration > 0) {
+                localStorage.setItem(`dur_${tid}`, audioPlayer.duration);
+                if ((audioPlayer.currentTime / audioPlayer.duration) >= 0.95) {
+                    localStorage.setItem(`done_${tid}`, "true");
+                }
+            }
         });
 
         audioPlayer.addEventListener('loadedmetadata', () => {
             totalDurationEl.textContent = formatTime(audioPlayer.duration);
             seekSlider.max = audioPlayer.duration;
-            const tid = audioPlayer.dataset.trackId;
-            if (tid) localStorage.setItem(`dur_${tid}`, audioPlayer.duration);
         });
 
         seekSlider.addEventListener('input', () => audioPlayer.currentTime = seekSlider.value);
@@ -681,8 +542,9 @@
         speedSelect.addEventListener('change', (e) => audioPlayer.playbackRate = parseFloat(e.target.value));
 
         btnClearDb.addEventListener('click', () => {
-            if (confirm("هل تريد مسح البيانات؟")) {
+            if (confirm("هل تريد مسح جميع البيانات والتقدم؟")) {
                 localStorage.clear();
+                indexedDB.deleteDatabase('AudioDB_Clean_v1');
                 location.reload();
             }
         });
