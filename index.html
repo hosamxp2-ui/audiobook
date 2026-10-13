@@ -3,32 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الصوتية الهرمية الذكية</title>
+    <title>المكتبة الصوتية الاحترافية الفائقة</title>
     <style>
         :root[data-theme="dark"] {
-            --bg-color: #090d16;
-            --card-bg: rgba(30, 41, 59, 0.75);
+            --bg-color: #07090e;
+            --card-bg: rgba(18, 24, 38, 0.85);
             --card-border: rgba(255, 255, 255, 0.08);
             --primary: #6366f1;
             --primary-hover: #4f46e5;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #10b981;
-            --input-bg: rgba(15, 23, 42, 0.4);
+            --input-bg: rgba(30, 41, 59, 0.5);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
         :root[data-theme="light"] {
-            --bg-color: #f1f5f9;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --card-border: rgba(0, 0, 0, 0.08);
+            --bg-color: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(0, 0, 0, 0.06);
             --primary: #4f46e5;
             --primary-hover: #4338ca;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --accent: #059669;
             --input-bg: rgba(241, 245, 249, 0.8);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: background 0.3s, color 0.3s; }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: background 0.3s, color 0.3s, border 0.3s; }
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
@@ -36,93 +38,94 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 12px;
+            padding: 10px;
         }
         .app-wrapper { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 14px; }
-        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 2px; }
-        .app-header h1 { font-size: 1.1rem; font-weight: 700; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .nav-tabs { display: flex; background: var(--input-bg); border-radius: 12px; padding: 4px; gap: 4px; border: 1px solid var(--card-border); }
-        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
-        .tab-btn.active { background: var(--primary); color: white; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; }
+        .app-header h1 { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .nav-tabs { display: flex; background: var(--input-bg); border-radius: 14px; padding: 4px; gap: 4px; border: 1px solid var(--card-border); }
+        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 9px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+        .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
 
         .section-view { display: none; flex-direction: column; gap: 12px; }
         .section-view.active { display: flex; }
 
         .actions-bar { display: flex; gap: 8px; }
-        .btn-action { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: center; }
-        .btn-action.primary { background: var(--primary); border: none; color: white; }
+        .btn-action { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; cursor: pointer; text-align: center; box-shadow: var(--shadow); }
+        .btn-action.primary { background: linear-gradient(135deg, var(--primary), #818cf8); border: none; color: white; }
 
-        .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 18px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); }
+        .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 20px; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
+        
+        .player-art-container { position: relative; width: 80px; height: 80px; margin: 0 auto 14px auto; }
         .book-cover-art {
-            width: 70px; height: 70px; margin: 0 auto 12px auto; background: linear-gradient(135deg, var(--primary), #c084fc);
-            border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem;
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3); animation: pulseGlow 4s infinite alternate;
+            width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), #c084fc);
+            border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4); animation: pulseGlow 4s infinite alternate;
         }
-        @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+        @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
 
-        .book-meta { text-align: center; margin-bottom: 14px; }
-        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; background: var(--input-bg); color: var(--text-muted); margin-bottom: 6px; }
+        .book-meta { text-align: center; margin-bottom: 16px; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; background: var(--input-bg); color: var(--text-muted); margin-bottom: 8px; }
         .badge.playing { background: rgba(245, 158, 11, 0.15); color: #d97706; }
         .badge.completed { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
-        .book-meta h2 { font-size: 0.95rem; font-weight: 600; color: var(--text-main); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .book-meta h2 { font-size: 1rem; font-weight: 700; color: var(--text-main); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .progress-container { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 0.75rem; color: var(--text-muted); }
-        .progress-container input[type="range"] { flex: 1; accent-color: var(--primary); cursor: pointer; height: 5px; border-radius: 3px; }
+        .progress-container { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+        .progress-container input[type="range"] { flex: 1; accent-color: var(--primary); cursor: pointer; height: 6px; border-radius: 4px; background: var(--input-bg); }
 
-        .main-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-bottom: 14px; }
-        .control-btn { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px 14px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
-        .control-btn.main-play { background: var(--primary); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
+        .main-controls { display: flex; justify-content: center; align-items: center; gap: 18px; margin-bottom: 16px; }
+        .control-btn { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px 16px; border-radius: 14px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+        .control-btn.main-play { background: var(--primary); border: none; width: 56px; height: 56px; border-radius: 50%; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); }
 
-        .extra-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--input-bg); padding: 8px; border-radius: 12px; }
-        .select-wrapper { display: flex; flex-direction: column; gap: 2px; }
-        .select-wrapper label { font-size: 0.65rem; color: var(--text-muted); }
-        .select-wrapper select { background: transparent; border: none; color: var(--text-main); font-size: 0.75rem; font-weight: 600; outline: none; cursor: pointer; }
-        .timer-alert { text-align: center; font-size: 0.7rem; color: #d97706; margin-top: 6px; min-height: 12px; }
+        .extra-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: var(--input-bg); padding: 10px; border-radius: 14px; }
+        .select-wrapper { display: flex; flex-direction: column; gap: 3px; }
+        .select-wrapper label { font-size: 0.65rem; color: var(--text-muted); font-weight: 700; }
+        .select-wrapper select { background: transparent; border: none; color: var(--text-main); font-size: 0.8rem; font-weight: 700; outline: none; cursor: pointer; }
+        .timer-alert { text-align: center; font-size: 0.7rem; color: #d97706; margin-top: 8px; font-weight: 700; min-height: 12px; }
 
-        .list-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 14px; flex: 1; display: flex; flex-direction: column; max-height: 300px; }
-        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .list-header h3 { font-size: 0.85rem; font-weight: 600; }
-        .breadcrumb-trail { font-size: 0.75rem; color: var(--primary); margin-bottom: 6px; display: flex; gap: 4px; overflow-x: auto; white-space: nowrap; }
+        .list-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 16px; flex: 1; display: flex; flex-direction: column; max-height: 320px; box-shadow: var(--shadow); }
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .list-header h3 { font-size: 0.9rem; font-weight: 800; }
+        .breadcrumb-trail { font-size: 0.75rem; color: var(--primary); margin-bottom: 8px; display: flex; gap: 6px; overflow-x: auto; white-space: nowrap; font-weight: 700; }
         .breadcrumb-trail span { cursor: pointer; text-decoration: underline; }
         
-        ul { list-style: none; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-        ul::-webkit-scrollbar { width: 4px; }
-        ul::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
+        ul { list-style: none; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        ul::-webkit-scrollbar { width: 5px; }
+        ul::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 5px; }
 
-        .empty-state { text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 15px; }
+        .empty-state { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 25px; font-weight: 600; }
 
-        li.item-row { padding: 10px; background: var(--input-bg); border-radius: 10px; cursor: pointer; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; }
-        li.item-row:hover { opacity: 0.9; }
-        li.item-row.active { background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); color: var(--primary); font-weight: 600; }
+        li.item-row { padding: 12px; background: var(--input-bg); border-radius: 12px; cursor: pointer; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; font-weight: 600; }
+        li.item-row:hover { border-color: var(--primary); }
+        li.item-row.active { background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); color: var(--primary); font-weight: 700; }
         .item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50%; }
-        .item-meta { font-size: 0.7rem; color: var(--text-muted); text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+        .item-meta { font-size: 0.7rem; color: var(--text-muted); text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; font-weight: 700; }
 
-        .settings-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-        .setting-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; padding-bottom: 8px; border-bottom: 1px solid var(--card-border); }
-        .setting-item:last-child { border-bottom: none; }
-        .setting-item select, .setting-item input[type="checkbox"] { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; }
+        .settings-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow); }
+        .setting-group-title { font-size: 0.85rem; font-weight: 800; color: var(--primary); margin-bottom: -4px; }
+        .setting-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 700; padding-bottom: 10px; border-bottom: 1px solid var(--card-border); }
+        .setting-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .setting-item select, .setting-item input[type="checkbox"] { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px 12px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; outline: none; }
     </style>
 </head>
 <body>
     <div class="app-wrapper">
         <header class="app-header">
-            <h1>🎧 المكتبة الهرمية الذكية</h1>
-            <button id="btn-clear-db" class="btn-action" style="padding: 4px 8px; font-size: 0.7rem;">إعادة ضبط</button>
+            <h1>🎧 المكتبة الفائقة</h1>
+            <button id="btn-clear-db" class="btn-action" style="padding: 6px 10px; font-size: 0.75rem; flex:none;">إعادة ضبط</button>
         </header>
 
         <nav class="nav-tabs">
             <button class="tab-btn active" onclick="switchTab('library')">📚 مكتبة المجلدات</button>
             <button class="tab-btn" onclick="switchTab('files')">📁 الملفات الفردية</button>
-            <button class="tab-btn" onclick="switchTab('settings')">⚙️ الإعدادات</button>
+            <button class="tab-btn" onclick="switchTab('settings')">⚙️ الإعدادات المتقدمة</button>
         </nav>
 
         <div id="view-library" class="section-view active">
             <div class="actions-bar">
-                <label class="btn-action primary">
-                    📂 إضافة وحدة تخزين / مجلد رئيسي
-                    <input type="file" id="folder-input" accept="audio/*" webkitdirectory directory multiple hidden>
-                </label>
+                <button class="btn-action primary" onclick="pickDirectoryFast()">⚡ اختيار أو استعادة مجلد التخزين</button>
             </div>
             <div class="list-card">
                 <div class="list-header">
@@ -130,7 +133,7 @@
                 </div>
                 <div id="breadcrumb" class="breadcrumb-trail"></div>
                 <ul id="library-list">
-                    <li class="empty-state">لم تقم بإضافة مجلدات بعد. اختر مجلداً رئيسياً يحتوي على ألبوماتك أو كتبك الصوتية.</li>
+                    <li class="empty-state">اضغط على الزر أعلاه لاختيار أو استعادة مجلدك الرئيسي فورياً!</li>
                 </ul>
             </div>
         </div>
@@ -154,19 +157,23 @@
 
         <div id="view-settings" class="section-view">
             <div class="settings-card">
+                <div class="setting-group-title">🎨 المظهر والواجهة</div>
                 <div class="setting-item">
                     <span>🌙 الثيم (المظهر)</span>
                     <select id="setting-theme" onchange="changeTheme(this.value)">
-                        <option value="dark">ليلي (داكن)</option>
-                        <option value="light">نهاري (فاتح)</option>
+                        <option value="dark">ليلي فاخر</option>
+                        <option value="light">نهاري ناصع</option>
                     </select>
                 </div>
+
+                <div class="setting-group-title">🎧 التحكم الذكي بالتشغيل</div>
                 <div class="setting-item">
-                    <span>⏪ القفز التلقائي عند الفتح (ثوانٍ)</span>
+                    <span>⏪ القفز التلقائي للخلف عند الفتح</span>
                     <select id="setting-rewind">
                         <option value="0">بدون إرجاع</option>
                         <option value="3" selected>3 ثوانٍ للوراء</option>
                         <option value="5">5 ثوانٍ للوراء</option>
+                        <option value="10">10 ثوانٍ للوراء</option>
                     </select>
                 </div>
                 <div class="setting-item">
@@ -185,7 +192,9 @@
         </div>
 
         <main class="player-card">
-            <div class="book-cover-art">🎧</div>
+            <div class="player-art-container">
+                <div class="book-cover-art">🎧</div>
+            </div>
             <div class="book-meta">
                 <div id="status-badge" class="badge">جاهز للتشغيل</div>
                 <h2 id="chapter-title">اختر ملفاً أو مجلداً للبدء</h2>
@@ -240,7 +249,6 @@
         const filesList = document.getElementById('files-list');
         const breadcrumbEl = document.getElementById('breadcrumb');
         
-        const folderInput = document.getElementById('folder-input');
         const fileInput = document.getElementById('file-input');
         const speedSelect = document.getElementById('speed-select');
         const timerSelect = document.getElementById('timer-select');
@@ -258,10 +266,11 @@
         const settingWakeLock = document.getElementById('setting-wakelock');
 
         let db;
-        let rootDirectory = { name: "الرئيسية", subfolders: {}, files: [] };
-        let currentPath = [];
+        let rootDirHandle = null;
+        let currentSubHandle = null;
+        let currentPathStack = [];
         let currentFilesList = [];
-        let currentTrackId = null;
+        let currentTrackHandle = null;
         let currentTrackUrl = null;
         let wakeLockObj = null;
 
@@ -297,58 +306,154 @@
             }
         }
 
-        const request = indexedDB.open('HierarchicalAudioDB_v2', 1);
+        // تهيئة قاعدة البيانات IndexedDB لحفظ مقبض المجلد واستعادته
+        const request = indexedDB.open('PermanentAudioDB', 1);
         request.onerror = () => console.error("DB error");
-        request.onsuccess = (e) => {
+        request.onsuccess = async (e) => {
             db = e.target.result;
-            loadAppData();
+            await checkSavedDirectory();
         };
         request.onupgradeneeded = (e) => {
             db = e.target.result;
-            if (!db.objectStoreNames.contains('storage')) db.createObjectStore('storage', { keyPath: 'key' });
+            if (!db.objectStoreNames.contains('handles')) db.createObjectStore('handles', { keyPath: 'key' });
         };
 
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
-            if (tab === 'library') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('view-library').classList.add('active');
-            } else if (tab === 'files') {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('view-files').classList.add('active');
-            } else {
-                document.querySelectorAll('.tab-btn')[2].classList.add('active');
-                document.getElementById('view-settings').classList.add('active');
+        async function saveDirectoryHandle(handle) {
+            if (!db) return;
+            const tx = db.transaction(['handles'], 'readwrite');
+            tx.objectStore('handles').put({ key: 'root_dir', handle: handle });
+        }
+
+        async function checkSavedDirectory() {
+            if (!db) return;
+            const tx = db.transaction(['handles'], 'readonly');
+            const req = tx.objectStore('handles').get('root_dir');
+            req.onsuccess = async (e) => {
+                if (e.target.result) {
+                    rootDirHandle = e.target.result.handle;
+                    // التحقق مما إذا كان الإذن ممنوحاً مسبقاً أو طلبه تلقائياً
+                    if ((await rootDirHandle.queryPermission({ mode: 'read' })) === 'granted') {
+                        currentSubHandle = rootDirHandle;
+                        await renderFileSystem();
+                    } else {
+                        libraryList.innerHTML = `<li class="empty-state" style="cursor:pointer; color:var(--primary);" onclick="requestSavedPermission()">اضغط هنا لاستعادة الاتصال بمجلد التخزين المحفوظ</li>`;
+                    }
+                }
+            };
+        }
+
+        async function requestSavedPermission() {
+            if (rootDirHandle) {
+                if ((await rootDirHandle.requestPermission({ mode: 'read' })) === 'granted') {
+                    currentSubHandle = rootDirHandle;
+                    await renderFileSystem();
+                }
             }
         }
 
-        folderInput.addEventListener('change', (e) => {
-            const rawFiles = Array.from(e.target.files).filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i));
-            if (rawFiles.length === 0) return;
+        async function pickDirectoryFast() {
+            if (!('showDirectoryPicker' in window)) {
+                alert("متصفحك لا يدعم هذه التقنية السريعة المباشرة، يرجى استخدام متصفح Chrome الحديث.");
+                return;
+            }
+            try {
+                rootDirHandle = await window.showDirectoryPicker();
+                await saveDirectoryHandle(rootDirHandle);
+                currentSubHandle = rootDirHandle;
+                currentPathStack = [];
+                await renderFileSystem();
+            } catch (err) {
+                console.log("User cancelled picker");
+            }
+        }
 
-            rawFiles.forEach((file, idx) => {
-                const pathParts = file.webkitRelativePath ? file.webkitRelativePath.split('/') : [file.name];
-                insertIntoTree(rootDirectory, pathParts, {
-                    id: 'track_' + Date.now() + '_' + idx,
-                    title: file.name.replace(/\.[^/.]+$/, ""),
-                    file: file
-                });
-            });
+        async function renderFileSystem() {
+            if (!currentSubHandle) return;
+            libraryList.innerHTML = '<li class="empty-state">جاري القراءة الفورية للمجلدات...</li>';
+            breadcrumbEl.innerHTML = '';
 
-            saveTreeToDB();
-            renderLibrary();
-        });
+            let crumb = document.createElement('span');
+            crumb.textContent = rootDirHandle ? rootDirHandle.name : "الرئيسية";
+            crumb.onclick = async () => {
+                currentSubHandle = rootDirHandle;
+                currentPathStack = [];
+                await renderFileSystem();
+            };
+            breadcrumbEl.appendChild(crumb);
 
-        function insertIntoTree(node, parts, fileObj) {
-            const currentPart = parts[0];
-            if (parts.length === 1) {
-                node.files.push(fileObj);
-            } else {
-                if (!node.subfolders[currentPart]) {
-                    node.subfolders[currentPart] = { name: currentPart, subfolders: {}, files: [] };
+            for (let item of currentPathStack) {
+                let sep = document.createTextNode(" / ");
+                breadcrumbEl.appendChild(sep);
+                let pSpan = document.createElement('span');
+                pSpan.textContent = item.name;
+                pSpan.onclick = async () => {
+                    const idx = currentPathStack.indexOf(item);
+                    currentPathStack = currentPathStack.slice(0, idx + 1);
+                    currentSubHandle = item.handle;
+                    await renderFileSystem();
+                };
+                breadcrumbEl.appendChild(pSpan);
+            }
+
+            libraryList.innerHTML = '';
+            let folders = [];
+            let audioFiles = [];
+
+            try {
+                for await (const [name, handle] of currentSubHandle.entries()) {
+                    if (handle.kind === 'directory') {
+                        folders.push({ name, handle });
+                    } else if (handle.kind === 'file') {
+                        if (name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i)) {
+                            audioFiles.push({ name, handle });
+                        }
+                    }
                 }
-                insertIntoTree(node.subfolders[currentPart], parts.slice(1), fileObj);
+            } catch (err) {
+                libraryList.innerHTML = `<li class="empty-state" style="cursor:pointer; color:var(--primary);" onclick="requestSavedPermission()">انتهت صلاحية الإذن، اضغط هنا لإعادة تفعيل المجلد</li>`;
+                return;
+            }
+
+            if (folders.length === 0 && audioFiles.length === 0) {
+                libraryList.innerHTML = '<li class="empty-state">هذا المجلد فارغ.</li>';
+                return;
+            }
+
+            for (let folder of folders) {
+                const li = document.createElement('li');
+                li.className = 'item-row';
+                li.innerHTML = `<span class="item-title">📁 ${folder.name}</span><span class="item-meta">مجلد فرعي</span>`;
+                li.onclick = async () => {
+                    currentPathStack.push({ name: folder.name, handle: folder.handle });
+                    currentSubHandle = folder.handle;
+                    await renderFileSystem();
+                };
+                libraryList.appendChild(li);
+            }
+
+            for (let fileObj of audioFiles) {
+                const fileId = 'fs_' + fileObj.name;
+                const li = document.createElement('li');
+                li.className = 'item-row';
+                if (currentTrackUrl && currentTrackHandle === fileObj.handle) li.classList.add('active');
+
+                const savedTime = parseFloat(localStorage.getItem(`pos_${fileId}`) || 0);
+                const duration = parseFloat(localStorage.getItem(`dur_${fileId}`) || 0);
+                const isDone = localStorage.getItem(`done_${fileId}`) === "true";
+                
+                let percent = duration > 0 ? Math.min(100, Math.floor((savedTime / duration) * 100)) : 0;
+                if (isDone) percent = 100;
+
+                let titleClean = fileObj.name.replace(/\.[^/.]+$/, "");
+                let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
+                metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
+
+                li.innerHTML = `<span class="item-title">🎵 ${titleClean}</span><div class="item-meta">${metaHtml}</div>`;
+                li.onclick = async () => {
+                    const fileData = await fileObj.handle.getFile();
+                    playFile(fileData, fileId, titleClean, fileObj.handle);
+                };
+                libraryList.appendChild(li);
             }
         }
 
@@ -357,139 +462,14 @@
             if (files.length === 0) return;
 
             files.forEach((file, idx) => {
-                const fileObj = {
-                    id: 'ind_file_' + Date.now() + '_' + idx,
+                currentFilesList.push({
+                    id: 'ind_' + idx + '_' + file.name,
                     title: file.name.replace(/\.[^/.]+$/, ""),
                     file: file
-                };
-                currentFilesList.push(fileObj);
-            });
-            storeAppData();
-        });
-
-        function saveTreeToDB() {
-            if (!db) return;
-            const tx = db.transaction(['storage'], 'readwrite');
-            tx.objectStore('storage').put({ key: 'directory_tree', data: rootDirectory });
-            tx.objectStore('storage').put({ key: 'individual_files', data: currentFilesList });
-        }
-
-        function storeAppData() {
-            if (!db) return;
-            const tx = db.transaction(['storage'], 'readwrite');
-            tx.objectStore('storage').put({ key: 'directory_tree', data: rootDirectory });
-            tx.objectStore('storage').put({ key: 'individual_files', data: currentFilesList });
-            tx.oncomplete = () => renderFilesList();
-        }
-
-        function loadAppData() {
-            if (!db) return;
-            const tx = db.transaction(['storage'], 'readonly');
-            tx.objectStore('storage').get('directory_tree').onsuccess = (e) => {
-                if (e.target.result) rootDirectory = e.target.result.data;
-                renderLibrary();
-            };
-            tx.objectStore('storage').get('individual_files').onsuccess = (e) => {
-                if (e.target.result) currentFilesList = e.target.result.data;
-                renderFilesList();
-            };
-        }
-
-        function calculateFolderStats(node) {
-            let totalDur = 0;
-            let totalPlayed = 0;
-            let fileCount = 0;
-
-            function traverse(n) {
-                n.files.forEach(f => {
-                    fileCount++;
-                    const dur = parseFloat(localStorage.getItem(`dur_${f.id}`) || 0);
-                    const pos = parseFloat(localStorage.getItem(`pos_${f.id}`) || 0);
-                    const isDone = localStorage.getItem(`done_${f.id}`) === "true";
-                    totalDur += dur;
-                    totalPlayed += isDone ? dur : pos;
                 });
-                Object.values(n.subfolders).forEach(sub => traverse(sub));
-            }
-            traverse(node);
-
-            let percent = totalDur > 0 ? Math.min(100, Math.floor((totalPlayed / totalDur) * 100)) : 0;
-            return { totalDur, totalPlayed, percent, fileCount };
-        }
-
-        function renderLibrary() {
-            libraryList.innerHTML = '';
-            
-            breadcrumbEl.innerHTML = '';
-            let crumbSpan = document.createElement('span');
-            crumbSpan.textContent = "الرئيسية";
-            crumbSpan.onclick = () => { currentPath = []; renderLibrary(); };
-            breadcrumbEl.appendChild(crumbSpan);
-
-            let currentNode = rootDirectory;
-            for (let p of currentPath) {
-                if (currentNode.subfolders[p]) {
-                    currentNode = currentNode.subfolders[p];
-                    let sep = document.createTextNode(" / ");
-                    breadcrumbEl.appendChild(sep);
-                    let partSpan = document.createElement('span');
-                    partSpan.textContent = p;
-                    partSpan.onclick = () => {
-                        const idx = currentPath.indexOf(p);
-                        currentPath = currentPath.slice(0, idx + 1);
-                        renderLibrary();
-                    };
-                    breadcrumbEl.appendChild(partSpan);
-                }
-            }
-
-            const subKeys = Object.keys(currentNode.subfolders);
-            const files = currentNode.files;
-
-            if (subKeys.length === 0 && files.length === 0) {
-                libraryList.innerHTML = '<li class="empty-state">هذا المجلد فارغ.</li>';
-                return;
-            }
-
-            subKeys.forEach(subName => {
-                const subNode = currentNode.subfolders[subName];
-                const stats = calculateFolderStats(subNode);
-                
-                const li = document.createElement('li');
-                li.className = 'item-row';
-                li.innerHTML = `
-                    <span class="item-title">📁 ${subName}</span>
-                    <div class="item-meta">
-                        <span>${stats.fileCount} ملفات</span>
-                        <span style="color:var(--accent)">${stats.percent}% مكتمل</span>
-                    </div>`;
-                li.onclick = () => {
-                    currentPath.push(subName);
-                    renderLibrary();
-                };
-                libraryList.appendChild(li);
             });
-
-            files.forEach(track => {
-                const li = document.createElement('li');
-                li.className = 'item-row';
-                if (track.id === currentTrackId) li.classList.add('active');
-
-                const savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
-                const duration = parseFloat(localStorage.getItem(`dur_${track.id}`) || 0);
-                const isDone = localStorage.getItem(`done_${track.id}`) === "true";
-                
-                let percent = duration > 0 ? Math.min(100, Math.floor((savedTime / duration) * 100)) : 0;
-                if (isDone) percent = 100;
-
-                let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
-                metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
-
-                li.innerHTML = `<span class="item-title">🎵 ${track.title}</span><div class="item-meta">${metaHtml}</div>`;
-                li.onclick = () => playTrack(track);
-                libraryList.appendChild(li);
-            });
-        }
+            renderFilesList();
+        });
 
         function renderFilesList() {
             filesList.innerHTML = '';
@@ -501,8 +481,6 @@
             currentFilesList.forEach(track => {
                 const li = document.createElement('li');
                 li.className = 'item-row';
-                if (track.id === currentTrackId) li.classList.add('active');
-
                 const savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
                 const duration = parseFloat(localStorage.getItem(`dur_${track.id}`) || 0);
                 const isDone = localStorage.getItem(`done_${track.id}`) === "true";
@@ -514,21 +492,22 @@
                 metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
 
                 li.innerHTML = `<span class="item-title">🎵 ${track.title}</span><div class="item-meta">${metaHtml}</div>`;
-                li.onclick = () => playTrack(track);
+                li.onclick = () => playFile(track.file, track.id, track.title, null);
                 filesList.appendChild(li);
             });
         }
 
-        function playTrack(track) {
-            currentTrackId = track.id;
+        function playFile(file, fileId, title, handle) {
+            currentTrackHandle = handle;
             if (currentTrackUrl) URL.revokeObjectURL(currentTrackUrl);
             
-            currentTrackUrl = URL.createObjectURL(track.file);
+            currentTrackUrl = URL.createObjectURL(file);
             audioPlayer.src = currentTrackUrl;
-            chapterTitle.textContent = track.title;
+            chapterTitle.textContent = title;
+            audioPlayer.dataset.trackId = fileId;
 
-            let savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
-            const isDone = localStorage.getItem(`done_${track.id}`) === "true";
+            let savedTime = parseFloat(localStorage.getItem(`pos_${fileId}`) || 0);
+            const isDone = localStorage.getItem(`done_${fileId}`) === "true";
             
             const rewindSecs = parseInt(settingRewind.value);
             if (savedTime > rewindSecs && !isDone) savedTime -= rewindSecs;
@@ -538,11 +517,9 @@
             audioPlayer.play().catch(() => {});
             btnPlayPause.textContent = "⏸";
             updateBadge(isDone, savedTime);
+            setupMediaSession(title);
 
-            // تفعيل مشغل الإشعارات وشاشة القفل (Media Session)
-            setupMediaSession(track.title);
-
-            renderLibrary();
+            if (rootDirHandle) renderFileSystem();
             renderFilesList();
         }
 
@@ -550,8 +527,8 @@
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: title,
-                    artist: 'المكتبة الهرمية الذكية',
-                    album: 'كتب صوتية ومجلدات'
+                    artist: 'المكتبة الفائقة',
+                    album: 'كتب ومجلدات صوتية'
                 });
 
                 navigator.mediaSession.setActionHandler('play', () => audioPlayer.play());
@@ -596,13 +573,13 @@
         audioPlayer.addEventListener('loadedmetadata', () => {
             totalDurationEl.textContent = formatTime(audioPlayer.duration);
             seekSlider.max = audioPlayer.duration;
-            if (currentTrackId) {
-                localStorage.setItem(`dur_${currentTrackId}`, audioPlayer.duration);
-            }
+            const tid = audioPlayer.dataset.trackId;
+            if (tid) localStorage.setItem(`dur_${tid}`, audioPlayer.duration);
         });
 
         audioPlayer.addEventListener('timeupdate', () => {
-            if (!currentTrackId) return;
+            const tid = audioPlayer.dataset.trackId;
+            if (!tid) return;
             const currentTime = audioPlayer.currentTime;
             const duration = audioPlayer.duration;
 
@@ -610,17 +587,17 @@
             currentTimeEl.textContent = formatTime(currentTime);
 
             if (currentTime > 0) {
-                localStorage.setItem(`pos_${currentTrackId}`, currentTime);
+                localStorage.setItem(`pos_${tid}`, currentTime);
                 if (!isNaN(duration) && duration > 0) {
-                    localStorage.setItem(`dur_${currentTrackId}`, duration);
+                    localStorage.setItem(`dur_${tid}`, duration);
                     if ((currentTime / duration) >= 0.95) {
-                        localStorage.setItem(`done_${currentTrackId}`, "true");
+                        localStorage.setItem(`done_${tid}`, "true");
                         updateBadge(true, currentTime);
                     } else {
                         updateBadge(false, currentTime);
                     }
                 }
-                renderLibrary();
+                if (rootDirHandle) renderFileSystem();
                 renderFilesList();
             }
         });
@@ -645,9 +622,24 @@
 
         speedSelect.addEventListener('change', (e) => audioPlayer.playbackRate = parseFloat(e.target.value));
 
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
+            if (tab === 'library') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('view-library').classList.add('active');
+            } else if (tab === 'files') {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('view-files').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
+                document.getElementById('view-settings').classList.add('active');
+            }
+        }
+
         btnClearDb.addEventListener('click', () => {
-            if (confirm("هل تريد مسح جميع البيانات والمجلدات والتقدم؟")) {
-                indexedDB.deleteDatabase('HierarchicalAudioDB_v2');
+            if (confirm("هل تريد مسح جميع البيانات والتقدم؟")) {
+                indexedDB.deleteDatabase('PermanentAudioDB');
                 localStorage.clear();
                 location.reload();
             }
