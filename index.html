@@ -46,28 +46,26 @@
         .app-header h1 { font-size: 1.15rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         .nav-tabs { display: flex; background: var(--input-bg); border-radius: 12px; padding: 3px; gap: 3px; border: 1px solid var(--card-border); overflow-x: auto; }
-        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 8px 6px; border-radius: 9px; font-size: 0.7rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 8px 6px; border-radius: 9px; font-size: 0.68rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
         .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
 
         .section-view { display: none; flex-direction: column; gap: 10px; }
         .section-view.active { display: flex; }
 
-        .actions-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .btn-action { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; text-align: center; box-shadow: var(--shadow); }
+        .actions-bar { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .btn-action { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 9px; border-radius: 12px; font-size: 0.78rem; font-weight: 700; cursor: pointer; text-align: center; box-shadow: var(--shadow); }
         .btn-action.primary { background: linear-gradient(135deg, var(--primary), #818cf8); border: none; color: white; }
 
-        .sort-select, .search-input { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; outline: none; }
+        .sort-select, .search-input { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 7px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; outline: none; }
         .search-input { flex: 1; }
 
-        /* المشغل */
         .player-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
         .player-art-container { position: relative; width: 65px; height: 65px; margin: 0 auto 10px auto; }
         .book-cover-art {
             width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), #c084fc);
             border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4); animation: pulseGlow 4s infinite alternate; background-size: cover; background-position: center;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4); background-size: cover; background-position: center;
         }
-        @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
 
         .book-meta { text-align: center; margin-bottom: 12px; }
         .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; background: var(--input-bg); color: var(--text-muted); margin-bottom: 6px; }
@@ -87,7 +85,6 @@
         .select-wrapper label { font-size: 0.6rem; color: var(--text-muted); font-weight: 700; }
         .select-wrapper select { background: transparent; border: none; color: var(--text-main); font-size: 0.75rem; font-weight: 700; outline: none; cursor: pointer; }
 
-        /* القوائم والقسم */
         .list-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 14px; flex: 1; display: flex; flex-direction: column; max-height: 290px; box-shadow: var(--shadow); }
         .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .list-header h3 { font-size: 0.85rem; font-weight: 800; }
@@ -100,34 +97,30 @@
 
         .empty-state { text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 20px; font-weight: 600; }
 
-        li.item-row { padding: 10px; background: var(--input-bg); border-radius: 10px; cursor: pointer; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; font-weight: 600; }
+        li.item-row { padding: 9px; background: var(--input-bg); border-radius: 10px; cursor: pointer; font-size: 0.78rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; font-weight: 600; }
         li.item-row:hover { border-color: var(--primary); }
         li.item-row.active { background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); color: var(--primary); font-weight: 700; }
-        .item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50%; }
+        .item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 55%; }
         .item-meta { font-size: 0.65rem; color: var(--text-muted); text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-weight: 700; }
 
-        .settings-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow); }
-        .setting-group-title { font-size: 0.8rem; font-weight: 800; color: var(--primary); margin-bottom: -2px; }
-        .setting-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid var(--card-border); }
-        .setting-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .setting-item select, .setting-item input[type="checkbox"] { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 6px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; outline: none; }
-        
-        .transcript-btn { background: var(--primary); color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 0.65rem; cursor: pointer; margin-top: 4px; }
-        .online-pod-img { width: 35px; height: 35px; border-radius: 8px; object-fit: cover; }
+        .btn-small { background: var(--primary); color: white; border: none; padding: 3px 7px; border-radius: 6px; font-size: 0.65rem; cursor: pointer; text-decoration: none; }
+        .btn-small.accent { background: var(--accent); }
+        .online-pod-img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; }
     </style>
 </head>
 <body>
     <div class="app-wrapper">
         <header class="app-header">
-            <h1>🎧 المكتبة الاحترافية</h1>
+            <h1>🎧 المكتبة والشاملة للبودكاست</h1>
             <button id="btn-clear-db" class="btn-action" style="padding: 4px 8px; font-size: 0.7rem; flex:none;">إعادة ضبط</button>
         </header>
 
         <nav class="nav-tabs">
             <button class="tab-btn active" onclick="switchTab('library')">📚 المجلدات</button>
             <button class="tab-btn" onclick="switchTab('files')">📁 الملفات</button>
-            <button class="tab-btn" onclick="switchTab('history')">🕒 السجل</button>
             <button class="tab-btn" onclick="switchTab('podcasts')">🎙️ البودكاست</button>
+            <button class="tab-btn" onclick="switchTab('downloads')">📥 المحمّلات</button>
+            <button class="tab-btn" onclick="switchTab('history')">🕒 السجل</button>
             <button class="tab-btn" onclick="switchTab('settings')">⚙️ الإعدادات</button>
         </nav>
 
@@ -139,7 +132,6 @@
                     <option value="name">ترتيب بالاسم</option>
                     <option value="date">ترتيب بالتاريخ</option>
                     <option value="size">ترتيب بالحجم</option>
-                    <option value="status">ترتيب بحالة التقدم</option>
                 </select>
             </div>
             <div class="list-card">
@@ -148,7 +140,7 @@
                 </div>
                 <div id="breadcrumb" class="breadcrumb-trail"></div>
                 <ul id="library-list">
-                    <li class="empty-state">اضغط على الزر أعلاه لاستعراض مجلداتك بهرمية وسرعة فائقة!</li>
+                    <li class="empty-state">اختر مجلداً رئيسياً للتصفح الهرمي والتنقل بين المجلدات الفرعية.</li>
                 </ul>
             </div>
         </div>
@@ -161,10 +153,9 @@
                     <input type="file" id="file-input" accept="audio/*" multiple hidden>
                 </label>
                 <select id="files-sort" class="sort-select" onchange="renderFilesList()">
-                    <option value="name">ترتيب بالاسم</option>
-                    <option value="date">ترتيب بالتاريخ</option>
-                    <option value="size">ترتيب بالحجم</option>
-                    <option value="status">ترتيب بحالة التقدم</option>
+                    <option value="name">الاسم</option>
+                    <option value="date">التاريخ</option>
+                    <option value="size">الحجم</option>
                 </select>
             </div>
             <div class="list-card">
@@ -177,6 +168,50 @@
             </div>
         </div>
 
+        <!-- قسم البودكاست والاشتراكات -->
+        <div id="view-podcasts" class="section-view">
+            <div class="actions-bar">
+                <input type="text" id="online-pod-query" class="search-input" placeholder="🌐 ابحث عن بودكاست أونلاين...">
+                <button class="btn-action primary" style="flex:none; padding:7px 10px;" onclick="searchPodcastOnline()">بحث</button>
+            </div>
+            <div class="actions-bar">
+                <button class="btn-action" onclick="showSubscriptions()">⭐ اشتراكاتي</button>
+                <select id="pod-sort" class="sort-select" onchange="renderPodcastsList()">
+                    <option value="date">الأحدث تاريخاً</option>
+                    <option value="name">حسب الاسم</option>
+                    <option value="status">حسب حالة الاستماع</option>
+                </select>
+            </div>
+            <div class="list-card">
+                <div class="list-header">
+                    <h3 id="pod-section-title">نتائج وقائمة البودكاست</h3>
+                </div>
+                <ul id="podcasts-list">
+                    <li class="empty-state">ابحث عن أي بودكاست أونلاين للاشتراك به واستماع حلقاته.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- قسم المحمّلات -->
+        <div id="view-downloads" class="section-view">
+            <div class="actions-bar">
+                <select id="dl-sort" class="sort-select" onchange="renderDownloadsList()" style="width:100%;">
+                    <option value="name">فرز بحسب اسم البودكاست</option>
+                    <option value="date">فرز بحسب تاريخ التحميل</option>
+                    <option value="size">فرز بالحجم</option>
+                    <option value="status">فرز بحالة الاستماع</option>
+                </select>
+            </div>
+            <div class="list-card">
+                <div class="list-header">
+                    <h3>📥 الحلقات المحمّلة</h3>
+                </div>
+                <ul id="downloads-list">
+                    <li class="empty-state">لم تقم بتحميل أي حلقات بعد.</li>
+                </ul>
+            </div>
+        </div>
+
         <!-- قسم السجل -->
         <div id="view-history" class="section-view">
             <div class="list-card" style="max-height: 360px;">
@@ -185,33 +220,6 @@
                 </div>
                 <ul id="history-list">
                     <li class="empty-state">لم تقم بتشغيل أي ملفات صوتية بعد.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- قسم البودكاست الشامل (أونلاين + محلي) -->
-        <div id="view-podcasts" class="section-view">
-            <div class="actions-bar">
-                <input type="text" id="online-pod-query" class="search-input" placeholder="🌐 ابحث عن بودكاست أونلاين...">
-                <button class="btn-action primary" style="flex:none; padding:8px 12px;" onclick="searchPodcastOnline()">بحث أونلاين</button>
-            </div>
-            <div class="actions-bar">
-                <label class="btn-action" style="font-size:0.75rem;">
-                    📁 إضافة حلقات محلية
-                    <input type="file" id="podcast-input" accept="audio/*,.srt,.vtt,.json" multiple hidden>
-                </label>
-                <select id="pod-filter" class="sort-select" onchange="renderPodcastsList()">
-                    <option value="all">الكل</option>
-                    <option value="progress">جاري الاستماع</option>
-                    <option value="completed">المكتملة</option>
-                </select>
-            </div>
-            <div class="list-card">
-                <div class="list-header">
-                    <h3 id="pod-section-title">حلقات والبودكاست</h3>
-                </div>
-                <ul id="podcasts-list">
-                    <li class="empty-state">ابحث أونلاين عن أي بودكاست أو أضف حلقات محلية.</li>
                 </ul>
             </div>
         </div>
@@ -246,19 +254,14 @@
                     </select>
                 </div>
 
-                <div class="setting-group-title">🎙️ إعدادات البودكاست المتقدمة</div>
+                <div class="setting-group-title">🎙️ إعدادات البودكاست</div>
                 <div class="setting-item">
                     <span>⏭️ التخطي التلقائي للمقدمة (ثوانٍ)</span>
                     <select id="setting-pod-intro">
                         <option value="0" selected>بدون تخطي</option>
                         <option value="15">15 ثانية</option>
                         <option value="30">30 ثانية</option>
-                        <option value="60">دقيقة كاملة</option>
                     </select>
-                </div>
-                <div class="setting-item">
-                    <span>🗑️ حذف تلقائي للحلقة عند انتهائها</span>
-                    <input type="checkbox" id="setting-pod-autodel">
                 </div>
                 <div class="setting-item">
                     <span>💡 منع انطفاء الشاشة (Wake Lock)</span>
@@ -275,7 +278,6 @@
             <div class="book-meta">
                 <div id="status-badge" class="badge">جاهز للتشغيل</div>
                 <h2 id="chapter-title">اختر ملفاً أو مجلداً للبدء</h2>
-                <div id="current-transcript-container"></div>
             </div>
 
             <audio id="audio-player"></audio>
@@ -311,7 +313,6 @@
                         <option value="15">15 دقيقة</option>
                         <option value="30">30 دقيقة</option>
                         <option value="60">ساعة</option>
-                        <option value="end">نهاية الفصل</option>
                     </select>
                 </div>
             </div>
@@ -326,14 +327,12 @@
         const filesList = document.getElementById('files-list');
         const historyList = document.getElementById('history-list');
         const podcastsList = document.getElementById('podcasts-list');
+        const downloadsList = document.getElementById('downloads-list');
         const breadcrumbEl = document.getElementById('breadcrumb');
-        const transcriptContainer = document.getElementById('current-transcript-container');
         const coverArt = document.getElementById('cover-art');
         
         const fileInput = document.getElementById('file-input');
-        const podcastInput = document.getElementById('podcast-input');
         const speedSelect = document.getElementById('speed-select');
-        const timerSelect = document.getElementById('timer-select');
         const btnPlayPause = document.getElementById('btn-play-pause');
         const btnRewind = document.getElementById('btn-rewind');
         const btnForward = document.getElementById('btn-forward');
@@ -345,11 +344,11 @@
         const settingRewind = document.getElementById('setting-rewind');
         const settingSkip = document.getElementById('setting-skip');
         const settingPodIntro = document.getElementById('setting-pod-intro');
-        const settingPodAutodel = document.getElementById('setting-pod-autodel');
         const settingWakeLock = document.getElementById('setting-wakelock');
         const libSort = document.getElementById('lib-sort');
         const filesSort = document.getElementById('files-sort');
-        const podFilter = document.getElementById('pod-filter');
+        const podSort = document.getElementById('pod-sort');
+        const dlSort = document.getElementById('dl-sort');
         const onlinePodQuery = document.getElementById('online-pod-query');
 
         let db;
@@ -357,8 +356,8 @@
         let currentSubHandle = null;
         let currentPathStack = [];
         let currentFilesList = [];
-        let podcastEpisodes = [];
-        let companionFiles = {};
+        let subscriptions = JSON.parse(localStorage.getItem('app_subscriptions') || '[]');
+        let downloadedEpisodes = JSON.parse(localStorage.getItem('app_downloads') || '[]');
         let historyItems = JSON.parse(localStorage.getItem('app_history') || '[]');
         let currentTrackHandle = null;
         let currentTrackUrl = null;
@@ -368,9 +367,7 @@
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('app_theme', theme);
         }
-        const savedTheme = localStorage.getItem('app_theme') || 'dark';
-        settingTheme.value = savedTheme;
-        changeTheme(savedTheme);
+        changeTheme(localStorage.getItem('app_theme') || 'dark');
 
         settingRewind.value = localStorage.getItem('pref_rewind') || '3';
         settingRewind.addEventListener('change', () => localStorage.setItem('pref_rewind', settingRewind.value));
@@ -378,20 +375,9 @@
         settingSkip.value = localStorage.getItem('pref_skip') || '10';
         settingSkip.addEventListener('change', () => {
             localStorage.setItem('pref_skip', settingSkip.value);
-            updateSkipButtonsText();
+            btnRewind.textContent = `⏪ ${settingSkip.value}s`;
+            btnForward.textContent = `${settingSkip.value}s ⏩`;
         });
-        function updateSkipButtonsText() {
-            const skipVal = settingSkip.value;
-            btnRewind.textContent = `⏪ ${skipVal}s`;
-            btnForward.textContent = `${skipVal}s ⏩`;
-        }
-        updateSkipButtonsText();
-
-        settingPodIntro.value = localStorage.getItem('pref_pod_intro') || '0';
-        settingPodIntro.addEventListener('change', () => localStorage.setItem('pref_pod_intro', settingPodIntro.value));
-
-        settingPodAutodel.checked = localStorage.getItem('pref_pod_autodel') === 'true';
-        settingPodAutodel.addEventListener('change', () => localStorage.setItem('pref_pod_autodel', settingPodAutodel.checked));
 
         async function toggleWakeLock(enabled) {
             if (enabled && 'wakeLock' in navigator) {
@@ -402,14 +388,13 @@
             }
         }
 
-        const request = indexedDB.open('FinalAudioDB_v5', 1);
-        request.onerror = () => console.error("DB error");
+        const request = indexedDB.open('FinalAudioDB_v6', 1);
         request.onsuccess = async (e) => {
             db = e.target.result;
             await checkSavedDirectory();
             renderFilesList();
-            renderPodcastsList();
             renderHistoryList();
+            renderDownloadsList();
         };
         request.onupgradeneeded = (e) => {
             db = e.target.result;
@@ -432,27 +417,13 @@
                     if ((await rootDirHandle.queryPermission({ mode: 'read' })) === 'granted') {
                         currentSubHandle = rootDirHandle;
                         await renderFileSystem();
-                    } else {
-                        libraryList.innerHTML = `<li class="empty-state" style="cursor:pointer; color:var(--primary);" onclick="requestSavedPermission()">اضغط هنا لاستعادة الاتصال بمجلد التخزين المحفوظ</li>`;
                     }
                 }
             };
         }
 
-        async function requestSavedPermission() {
-            if (rootDirHandle) {
-                if ((await rootDirHandle.requestPermission({ mode: 'read' })) === 'granted') {
-                    currentSubHandle = rootDirHandle;
-                    await renderFileSystem();
-                }
-            }
-        }
-
         async function pickDirectoryFast() {
-            if (!('showDirectoryPicker' in window)) {
-                alert("متصفحك لا يدعم هذه التقنية، يرجى استخدام متصفح كروم.");
-                return;
-            }
+            if (!('showDirectoryPicker' in window)) return alert("يرجى استخدام متصفح يدعم المجلدات.");
             try {
                 rootDirHandle = await window.showDirectoryPicker();
                 await saveDirectoryHandle(rootDirHandle);
@@ -462,27 +433,10 @@
             } catch (err) {}
         }
 
-        function sortItems(items, type, getFileObj) {
-            return items.sort((a, b) => {
-                if (type === 'name') {
-                    return a.name.localeCompare(b.name, 'ar', { numeric: true });
-                } else if (type === 'date') {
-                    return (b.lastModified || 0) - (a.lastModified || 0);
-                } else if (type === 'size') {
-                    return (b.size || 0) - (a.size || 0);
-                } else if (type === 'status') {
-                    const idA = getFileObj ? getFileObj(a).id : a.id;
-                    const doneA = localStorage.getItem(`done_${idA}`) === "true" ? 1 : 0;
-                    const doneB = localStorage.getItem(`done_${getFileObj ? getFileObj(b).id : b.id}`) === "true" ? 1 : 0;
-                    return doneA - doneB;
-                }
-                return 0;
-            });
-        }
-
+        // إصلاح تنقل المجلدات الهرمية
         async function renderFileSystem() {
             if (!currentSubHandle) return;
-            libraryList.innerHTML = '<li class="empty-state">جاري القراءة الهرمية...</li>';
+            libraryList.innerHTML = '<li class="empty-state">جاري قراءة المجلدات...</li>';
             breadcrumbEl.innerHTML = '';
 
             let crumb = document.createElement('span');
@@ -521,120 +475,55 @@
                         audioFiles.push({ name, handle, lastModified: file.lastModified, size: file.size });
                     }
                 }
-            } catch (err) {
-                libraryList.innerHTML = `<li class="empty-state" style="cursor:pointer; color:var(--primary);" onclick="requestSavedPermission()">انتهت صلاحية الإذن، اضغط هنا لإعادة التفعيل</li>`;
-                return;
-            }
-
-            const sortType = libSort.value;
-            audioFiles = sortItems(audioFiles, sortType, f => ({ id: 'fs_' + f.name }));
+            } catch (err) { return; }
 
             if (folders.length === 0 && audioFiles.length === 0) {
                 libraryList.innerHTML = '<li class="empty-state">هذا المجلد فارغ.</li>';
                 return;
             }
 
-            for (let folder of folders) {
+            folders.forEach(folder => {
                 const li = document.createElement('li');
                 li.className = 'item-row';
-                li.innerHTML = `<span class="item-title">📁 ${folder.name}</span><span class="item-meta">مجلد فرعي</span>`;
+                li.innerHTML = `<span class="item-title">📁 ${folder.name}</span><span class="item-meta">مجلد</span>`;
                 li.onclick = async () => {
                     currentPathStack.push({ name: folder.name, handle: folder.handle });
                     currentSubHandle = folder.handle;
                     await renderFileSystem();
                 };
                 libraryList.appendChild(li);
-            }
+            });
 
-            for (let fileObj of audioFiles) {
+            audioFiles.forEach(fileObj => {
                 const fileId = 'fs_' + fileObj.name;
                 const li = document.createElement('li');
                 li.className = 'item-row';
-                if (currentTrackUrl && currentTrackHandle === fileObj.handle) li.classList.add('active');
 
                 const savedTime = parseFloat(localStorage.getItem(`pos_${fileId}`) || 0);
                 const duration = parseFloat(localStorage.getItem(`dur_${fileId}`) || 0);
                 const isDone = localStorage.getItem(`done_${fileId}`) === "true";
-                
                 let percent = duration > 0 ? Math.min(100, Math.floor((savedTime / duration) * 100)) : 0;
-                if (isDone) percent = 100;
 
                 let titleClean = fileObj.name.replace(/\.[^/.]+$/, "");
-                let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
-                metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
-
-                li.innerHTML = `<span class="item-title">🎵 ${titleClean}</span><div class="item-meta">${metaHtml}</div>`;
-                li.onclick = async () => {
-                    const fileData = await fileObj.handle.getFile();
-                    playFile(fileData, fileId, titleClean, fileObj.handle);
-                };
+                li.innerHTML = `<span class="item-title">🎵 ${titleClean}</span><div class="item-meta"><span>${formatTime(savedTime)} / ${formatTime(duration)}</span><span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}%</span></div>`;
+                li.onclick = async () => playFile(await fileObj.handle.getFile(), fileId, titleClean, fileObj.handle);
                 libraryList.appendChild(li);
-            }
-        }
-
-        fileInput.addEventListener('change', (e) => {
-            const files = Array.from(e.target.files).filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i));
-            if (files.length === 0) return;
-
-            files.forEach((file, idx) => {
-                currentFilesList.push({
-                    id: 'ind_' + idx + '_' + file.name,
-                    title: file.name.replace(/\.[^/.]+$/, ""),
-                    file: file,
-                    lastModified: file.lastModified,
-                    size: file.size
-                });
-            });
-            renderFilesList();
-        });
-
-        function renderFilesList() {
-            filesList.innerHTML = '';
-            if (currentFilesList.length === 0) {
-                filesList.innerHTML = '<li class="empty-state">لم تقم بإضافة ملفات فردية بعد.</li>';
-                return;
-            }
-
-            const sortType = filesSort.value;
-            let sorted = sortItems([...currentFilesList], sortType);
-
-            sorted.forEach(track => {
-                const li = document.createElement('li');
-                li.className = 'item-row';
-                const savedTime = parseFloat(localStorage.getItem(`pos_${track.id}`) || 0);
-                const duration = parseFloat(localStorage.getItem(`dur_${track.id}`) || 0);
-                const isDone = localStorage.getItem(`done_${track.id}`) === "true";
-                
-                let percent = duration > 0 ? Math.min(100, Math.floor((savedTime / duration) * 100)) : 0;
-                if (isDone) percent = 100;
-
-                let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
-                metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
-
-                li.innerHTML = `<span class="item-title">🎵 ${track.title}</span><div class="item-meta">${metaHtml}</div>`;
-                li.onclick = () => playFile(track.file, track.id, track.title, null);
-                filesList.appendChild(li);
             });
         }
 
-        // محرك البحث أونلاين عن البودكاست عبر iTunes API
+        // إدارة الاشتراكات والبحث أونلاين
         async function searchPodcastOnline() {
             const query = onlinePodQuery.value.trim();
             if (!query) return;
-
-            podcastsList.innerHTML = '<li class="empty-state">جاري البحث أونلاين عبر الشبكة...</li>';
+            podcastsList.innerHTML = '<li class="empty-state">جاري البحث أونلاين...</li>';
 
             try {
                 const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=podcast&limit=10`);
                 const data = await res.json();
-
-                if (data.results.length === 0) {
-                    podcastsList.innerHTML = '<li class="empty-state">لم يتم العثور على بودكاست بهذا الاسم.</li>';
-                    return;
-                }
-
                 podcastsList.innerHTML = '';
+
                 data.results.forEach(pod => {
+                    const isSubbed = subscriptions.some(s => s.feedUrl === pod.feedUrl);
                     const li = document.createElement('li');
                     li.className = 'item-row';
                     li.innerHTML = `
@@ -643,168 +532,129 @@
                             <span class="item-title">${pod.collectionName}</span>
                         </div>
                         <div class="item-meta">
-                            <span>${pod.artistName}</span>
-                            <span style="color:var(--primary)">عرض الحلقات ⬅</span>
+                            <button class="btn-small ${isSubbed ? 'accent' : ''}" onclick="event.stopPropagation(); toggleSub('${pod.collectionName}', '${pod.feedUrl}', '${pod.artworkUrl100}')">${isSubbed ? '✔ مشترك' : '+ اشتراك'}</button>
                         </div>`;
                     li.onclick = () => fetchOnlineEpisodes(pod.feedUrl, pod.collectionName, pod.artworkUrl100);
                     podcastsList.appendChild(li);
                 });
-            } catch (err) {
-                podcastsList.innerHTML = '<li class="empty-state">تعذر الاتصال بالشبكة للبحث عن البودكاست.</li>';
+            } catch (err) { podcastsList.innerHTML = '<li class="empty-state">تعذر البحث.</li>'; }
+        }
+
+        function toggleSub(title, feedUrl, artUrl) {
+            const idx = subscriptions.findIndex(s => s.feedUrl === feedUrl);
+            if (idx >= 0) subscriptions.splice(idx, 1);
+            else subscriptions.push({ title, feedUrl, artUrl });
+            localStorage.setItem('app_subscriptions', JSON.stringify(subscriptions));
+            searchPodcastOnline();
+        }
+
+        function showSubscriptions() {
+            document.getElementById('pod-section-title').textContent = "⭐ اشتراكاتي في البودكاست";
+            podcastsList.innerHTML = '';
+            if (subscriptions.length === 0) {
+                podcastsList.innerHTML = '<li class="empty-state">ليس لديك اشتراكات بعد.</li>';
+                return;
             }
+            subscriptions.forEach(sub => {
+                const li = document.createElement('li');
+                li.className = 'item-row';
+                li.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><img src="${sub.artUrl}" class="online-pod-img"><span class="item-title">${sub.title}</span></div><button class="btn-small accent">استعراض الحلقات ⬅</button>`;
+                li.onclick = () => fetchOnlineEpisodes(sub.feedUrl, sub.title, sub.artUrl);
+                podcastsList.appendChild(li);
+            });
         }
 
         async function fetchOnlineEpisodes(feedUrl, podTitle, artUrl) {
-            podcastsList.innerHTML = '<li class="empty-state">جاري جلب حلقات البودكاست...</li>';
+            document.getElementById('pod-section-title').textContent = podTitle;
+            podcastsList.innerHTML = '<li class="empty-state">جاري جلب الحلقات...</li>';
 
             try {
                 const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
                 const data = await res.json();
-
-                if (!data.items || data.items.length === 0) {
-                    podcastsList.innerHTML = '<li class="empty-state">تعذر تحميل حلقات هذا البودكاست.</li>';
-                    return;
-                }
-
                 podcastsList.innerHTML = '';
+
                 data.items.forEach(ep => {
                     if (ep.enclosure && ep.enclosure.link) {
                         const epId = 'online_' + ep.guid;
-                        const savedTime = parseFloat(localStorage.getItem(`pos_${epId}`) || 0);
-                        const isDone = localStorage.getItem(`done_${epId}`) === "true";
+                        const isDownloaded = downloadedEpisodes.some(d => d.id === epId);
 
                         const li = document.createElement('li');
                         li.className = 'item-row';
                         li.innerHTML = `
                             <span class="item-title">🎙️ ${ep.title}</span>
                             <div class="item-meta">
-                                <span>${ep.pubDate ? ep.pubDate.split(' ')[0] : ''}</span>
-                                <span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${isDone ? '✔ مكتمل' : 'تشغيل'}</span>
+                                <a href="${ep.enclosure.link}" download target="_blank" class="btn-small" onclick="event.stopPropagation(); saveDownload('${ep.title}', '${ep.enclosure.link}', '${podTitle}', '${epId}')">${isDownloaded ? '✔ تم التحميل' : '📥 تحميل'}</a>
                             </div>`;
-                        li.onclick = () => playOnlineStream(ep.enclosure.link, epId, ep.title, artUrl, ep.description);
+                        li.onclick = () => playOnlineStream(ep.enclosure.link, epId, ep.title, artUrl);
                         podcastsList.appendChild(li);
                     }
                 });
-            } catch (err) {
-                podcastsList.innerHTML = '<li class="empty-state">خطأ في قراءة خلاصة البودكاست.</li>';
+            } catch (err) { podcastsList.innerHTML = '<li class="empty-state">تعذر جلب الحلقات.</li>'; }
+        }
+
+        function saveDownload(title, link, podTitle, id) {
+            if (!downloadedEpisodes.some(d => d.id === id)) {
+                downloadedEpisodes.push({ title, link, podTitle, id, date: new Date().toLocaleDateString('ar-EG') });
+                localStorage.setItem('app_downloads', JSON.stringify(downloadedEpisodes));
+                renderDownloadsList();
             }
         }
 
-        function playOnlineStream(url, id, title, artUrl, desc) {
-            audioPlayer.src = url;
-            chapterTitle.textContent = title;
-            audioPlayer.dataset.trackId = id;
-
-            if (artUrl) {
-                coverArt.style.backgroundImage = `url(${artUrl})`;
-                coverArt.textContent = '';
-            } else {
-                coverArt.style.backgroundImage = 'none';
-                coverArt.textContent = '🎧';
-            }
-
-            if (desc) {
-                companionFiles[title] = desc.replace(/<[^>]*>?/gm, '');
-                transcriptContainer.innerHTML = `<button class="transcript-btn" onclick="alert(companionFiles['${title}'])">📄 عرض وصف/تفاصيل الحلقة</button>`;
-            } else {
-                transcriptContainer.innerHTML = '';
-            }
-
-            let savedTime = parseFloat(localStorage.getItem(`pos_${id}`) || 0);
-            const isDone = localStorage.getItem(`done_${id}`) === "true";
-            
-            const rewindSecs = parseInt(settingRewind.value);
-            if (savedTime > rewindSecs && !isDone) savedTime -= rewindSecs;
-
-            if (savedTime && !isDone) audioPlayer.currentTime = savedTime;
-
-            audioPlayer.play().catch(() => {});
-            btnPlayPause.textContent = "⏸";
-            updateBadge(isDone, savedTime);
-            setupMediaSession(title);
-            addToHistory(title, id);
-        }
-
-        podcastInput.addEventListener('change', (e) => {
-            const rawFiles = Array.from(e.target.files);
-            const audioFiles = rawFiles.filter(f => f.type.startsWith('audio/') || f.name.match(/\.(mp3|m4a|aac|ogg|wav|flac)$/i));
-            const sideFiles = rawFiles.filter(f => f.name.match(/\.(srt|vtt|json)$/i));
-
-            sideFiles.forEach(async sf => {
-                const baseName = sf.name.replace(/\.[^/.]+$/, "");
-                const text = await sf.text();
-                companionFiles[baseName] = text;
-            });
-
-            if (audioFiles.length === 0) return;
-
-            audioFiles.forEach((file, idx) => {
-                podcastEpisodes.push({
-                    id: 'pod_' + idx + '_' + file.name,
-                    title: file.name.replace(/\.[^/.]+$/, ""),
-                    file: file,
-                    lastModified: file.lastModified,
-                    size: file.size
-                });
-            });
-            renderPodcastsList();
-        });
-
-        function renderPodcastsList() {
-            podcastsList.innerHTML = '';
-            let filtered = [...podcastEpisodes];
-
-            const filterVal = podFilter.value;
-            if (filterVal === 'progress') {
-                filtered = filtered.filter(ep => {
-                    const pos = parseFloat(localStorage.getItem(`pos_${ep.id}`) || 0);
-                    const done = localStorage.getItem(`done_${ep.id}`) === "true";
-                    return pos > 0 && !done;
-                });
-            } else if (filterVal === 'completed') {
-                filtered = filtered.filter(ep => localStorage.getItem(`done_${ep.id}`) === "true");
-            }
-
-            if (filtered.length === 0) {
-                podcastsList.innerHTML = '<li class="empty-state">لا توجد حلقات بودكاست محلي. يمكنك البحث أونلاين أعلاه!</li>';
+        function renderDownloadsList() {
+            downloadsList.innerHTML = '';
+            if (downloadedEpisodes.length === 0) {
+                downloadsList.innerHTML = '<li class="empty-state">لا توجد حلقات محمّلة بعد.</li>';
                 return;
             }
 
-            filtered.forEach(ep => {
+            downloadedEpisodes.forEach(ep => {
                 const li = document.createElement('li');
                 li.className = 'item-row';
-                const savedTime = parseFloat(localStorage.getItem(`pos_${ep.id}`) || 0);
-                const duration = parseFloat(localStorage.getItem(`dur_${ep.id}`) || 0);
-                const isDone = localStorage.getItem(`done_${ep.id}`) === "true";
-                
-                let percent = duration > 0 ? Math.min(100, Math.floor((savedTime / duration) * 100)) : 0;
-                if (isDone) percent = 100;
-
-                let metaHtml = `<span>${formatTime(savedTime)} / ${formatTime(duration)}</span>`;
-                metaHtml += `<span style="color:${isDone ? 'var(--accent)' : '#d97706'}">${percent}% ${isDone ? '✔' : ''}</span>`;
-
-                let hasTranscript = companionFiles[ep.title] ? `<button class="transcript-btn" onclick="event.stopPropagation(); alert(companionFiles['${ep.title}'])">📄 التفريغ</button>` : '';
-
-                li.innerHTML = `<span class="item-title">🎙️ ${ep.title}</span><div class="item-meta">${metaHtml} ${hasTranscript}</div>`;
-                li.onclick = () => playFile(ep.file, ep.id, ep.title, null, true);
-                podcastsList.appendChild(li);
+                li.innerHTML = `<span class="item-title">📥 ${ep.title}</span><div class="item-meta"><span>${ep.podTitle}</span><span>${ep.date}</span></div>`;
+                li.onclick = () => playOnlineStream(ep.link, ep.id, ep.title, null);
+                downloadsList.appendChild(li);
             });
+        }
+
+        function playOnlineStream(url, id, title, artUrl) {
+            audioPlayer.src = url;
+            chapterTitle.textContent = title;
+            audioPlayer.dataset.trackId = id;
+            if (artUrl) coverArt.style.backgroundImage = `url(${artUrl})`;
+
+            let savedTime = parseFloat(localStorage.getItem(`pos_${id}`) || 0);
+            if (savedTime) audioPlayer.currentTime = savedTime;
+
+            audioPlayer.play().catch(() => {});
+            btnPlayPause.textContent = "⏸";
+            addToHistory(title, id);
+        }
+
+        function playFile(file, fileId, title, handle) {
+            currentTrackHandle = handle;
+            if (currentTrackUrl) URL.revokeObjectURL(currentTrackUrl);
+            currentTrackUrl = URL.createObjectURL(file);
+            audioPlayer.src = currentTrackUrl;
+            chapterTitle.textContent = title;
+            audioPlayer.dataset.trackId = fileId;
+
+            let savedTime = parseFloat(localStorage.getItem(`pos_${fileId}`) || 0);
+            if (savedTime) audioPlayer.currentTime = savedTime;
+
+            audioPlayer.play().catch(() => {});
+            btnPlayPause.textContent = "⏸";
+            addToHistory(title, fileId);
         }
 
         function addToHistory(title, id) {
             historyItems = historyItems.filter(item => item.id !== id);
-            historyItems.unshift({ title, id, time: new Date().toLocaleTimeString('ar-EG', {hour: '2-digit', minute:'2-digit'}) });
-            if (historyItems.length > 30) historyItems.pop();
+            historyItems.unshift({ title, id, time: new Date().toLocaleTimeString('ar-EG') });
             localStorage.setItem('app_history', JSON.stringify(historyItems));
             renderHistoryList();
         }
 
         function renderHistoryList() {
             historyList.innerHTML = '';
-            if (historyItems.length === 0) {
-                historyList.innerHTML = '<li class="empty-state">لم تقم بتشغيل أي ملفات صوتية بعد.</li>';
-                return;
-            }
             historyItems.forEach(item => {
                 const li = document.createElement('li');
                 li.className = 'item-row';
@@ -813,173 +663,69 @@
             });
         }
 
-        function playFile(file, fileId, title, handle, isPodcast = false) {
-            currentTrackHandle = handle;
-            if (currentTrackUrl) URL.revokeObjectURL(currentTrackUrl);
-            
-            currentTrackUrl = URL.createObjectURL(file);
-            audioPlayer.src = currentTrackUrl;
-            chapterTitle.textContent = title;
-            audioPlayer.dataset.trackId = fileId;
-            coverArt.style.backgroundImage = 'none';
-            coverArt.textContent = '🎧';
-
-            if (companionFiles[title]) {
-                transcriptContainer.innerHTML = `<button class="transcript-btn" onclick="alert(companionFiles['${title}'])">📄 عرض تفريغ الحلقة / الفصول</button>`;
-            } else {
-                transcriptContainer.innerHTML = '';
-            }
-
-            let savedTime = parseFloat(localStorage.getItem(`pos_${fileId}`) || 0);
-            const isDone = localStorage.getItem(`done_${fileId}`) === "true";
-            
-            const rewindSecs = parseInt(settingRewind.value);
-            if (savedTime > rewindSecs && !isDone) savedTime -= rewindSecs;
-
-            if (isPodcast && savedTime === 0) {
-                const introSkip = parseInt(settingPodIntro.value) || 0;
-                if (introSkip > 0) savedTime = introSkip;
-            }
-
-            if (savedTime && !isDone) audioPlayer.currentTime = savedTime;
-
-            audioPlayer.play().catch(() => {});
-            btnPlayPause.textContent = "⏸";
-            updateBadge(isDone, savedTime);
-            setupMediaSession(title);
-            addToHistory(title, fileId);
-
-            if (rootDirHandle) renderFileSystem();
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            files.forEach((file, idx) => {
+                currentFilesList.push({ id: 'ind_' + idx, title: file.name, file });
+            });
             renderFilesList();
-            renderPodcastsList();
-        }
+        });
 
-        function setupMediaSession(title) {
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title: title,
-                    artist: 'المكتبة الاحترافية',
-                    album: 'كتب وبودكاست صوتي'
-                });
-
-                navigator.mediaSession.setActionHandler('play', () => audioPlayer.play());
-                navigator.mediaSession.setActionHandler('pause', () => audioPlayer.pause());
-                navigator.mediaSession.setActionHandler('seekbackward', () => {
-                    const skip = parseInt(settingSkip.value) || 10;
-                    audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - skip);
-                });
-                navigator.mediaSession.setActionHandler('seekforward', () => {
-                    const skip = parseInt(settingSkip.value) || 10;
-                    audioPlayer.currentTime = Math.min(audioPlayer.duration || 0, audioPlayer.currentTime + skip);
-                });
-            }
-        }
-
-        function updateBadge(isCompleted, currentTime) {
-            if (isCompleted) {
-                statusBadge.textContent = "✔ مكتمل";
-                statusBadge.className = "badge completed";
-            } else if (currentTime > 5) {
-                statusBadge.textContent = "🎧 جاري الاستماع";
-                statusBadge.className = "badge playing";
-            } else {
-                statusBadge.textContent = "جاهز";
-                statusBadge.className = "badge";
-            }
+        function renderFilesList() {
+            filesList.innerHTML = '';
+            currentFilesList.forEach(track => {
+                const li = document.createElement('li');
+                li.className = 'item-row';
+                li.innerHTML = `<span class="item-title">🎵 ${track.title}</span>`;
+                li.onclick = () => playFile(track.file, track.id, track.title, null);
+                filesList.appendChild(li);
+            });
         }
 
         btnPlayPause.addEventListener('click', () => {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                btnPlayPause.textContent = "⏸";
-            } else {
-                audioPlayer.pause();
-                btnPlayPause.textContent = "▶";
-            }
-        });
-
-        audioPlayer.addEventListener('play', () => btnPlayPause.textContent = "⏸");
-        audioPlayer.addEventListener('pause', () => btnPlayPause.textContent = "▶");
-
-        audioPlayer.addEventListener('loadedmetadata', () => {
-            totalDurationEl.textContent = formatTime(audioPlayer.duration);
-            seekSlider.max = audioPlayer.duration;
-            const tid = audioPlayer.dataset.trackId;
-            if (tid) localStorage.setItem(`dur_${tid}`, audioPlayer.duration);
+            if (audioPlayer.paused) { audioPlayer.play(); btnPlayPause.textContent = "⏸"; }
+            else { audioPlayer.pause(); btnPlayPause.textContent = "▶"; }
         });
 
         audioPlayer.addEventListener('timeupdate', () => {
             const tid = audioPlayer.dataset.trackId;
             if (!tid) return;
-            const currentTime = audioPlayer.currentTime;
-            const duration = audioPlayer.duration;
-
-            seekSlider.value = currentTime;
-            currentTimeEl.textContent = formatTime(currentTime);
-
-            if (currentTime > 0) {
-                localStorage.setItem(`pos_${tid}`, currentTime);
-                if (!isNaN(duration) && duration > 0) {
-                    localStorage.setItem(`dur_${tid}`, duration);
-                    if ((currentTime / duration) >= 0.95) {
-                        localStorage.setItem(`done_${tid}`, "true");
-                        updateBadge(true, currentTime);
-                        
-                        if (settingPodAutodel.checked && tid.startsWith('pod_')) {
-                            podcastEpisodes = podcastEpisodes.filter(ep => ep.id !== tid);
-                            renderPodcastsList();
-                        }
-                    } else {
-                        updateBadge(false, currentTime);
-                    }
-                }
-            }
+            seekSlider.value = audioPlayer.currentTime;
+            currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+            localStorage.setItem(`pos_${tid}`, audioPlayer.currentTime);
         });
 
-        seekSlider.addEventListener('input', () => { audioPlayer.currentTime = seekSlider.value; });
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            totalDurationEl.textContent = formatTime(audioPlayer.duration);
+            seekSlider.max = audioPlayer.duration;
+        });
 
-        function formatTime(seconds) {
-            if (isNaN(seconds) || seconds <= 0) return "00:00";
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        seekSlider.addEventListener('input', () => audioPlayer.currentTime = seekSlider.value);
+
+        function formatTime(secs) {
+            if (isNaN(secs) || secs <= 0) return "00:00";
+            const m = Math.floor(secs / 60);
+            const s = Math.floor(secs % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
         }
 
-        btnRewind.addEventListener('click', () => {
-            const skip = parseInt(settingSkip.value) || 10;
-            audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - skip);
-        });
-        btnForward.addEventListener('click', () => {
-            const skip = parseInt(settingSkip.value) || 10;
-            audioPlayer.currentTime = Math.min(audioPlayer.duration || 0, audioPlayer.currentTime + skip);
-        });
-
+        btnRewind.addEventListener('click', () => audioPlayer.currentTime -= 10);
+        btnForward.addEventListener('click', () => audioPlayer.currentTime += 10);
         speedSelect.addEventListener('change', (e) => audioPlayer.playbackRate = parseFloat(e.target.value));
 
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
-            if (tab === 'library') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('view-library').classList.add('active');
-            } else if (tab === 'files') {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('view-files').classList.add('active');
-            } else if (tab === 'history') {
-                document.querySelectorAll('.tab-btn')[2].classList.add('active');
-                document.getElementById('view-history').classList.add('active');
-            } else if (tab === 'podcasts') {
-                document.querySelectorAll('.tab-btn')[3].classList.add('active');
-                document.getElementById('view-podcasts').classList.add('active');
-            } else {
-                document.querySelectorAll('.tab-btn')[4].classList.add('active');
-                document.getElementById('view-settings').classList.add('active');
-            }
+            if (tab === 'library') { document.querySelectorAll('.tab-btn')[0].classList.add('active'); document.getElementById('view-library').classList.add('active'); }
+            else if (tab === 'files') { document.querySelectorAll('.tab-btn')[1].classList.add('active'); document.getElementById('view-files').classList.add('active'); }
+            else if (tab === 'podcasts') { document.querySelectorAll('.tab-btn')[2].classList.add('active'); document.getElementById('view-podcasts').classList.add('active'); }
+            else if (tab === 'downloads') { document.querySelectorAll('.tab-btn')[3].classList.add('active'); document.getElementById('view-downloads').classList.add('active'); }
+            else if (tab === 'history') { document.querySelectorAll('.tab-btn')[4].classList.add('active'); document.getElementById('view-history').classList.add('active'); }
+            else { document.querySelectorAll('.tab-btn')[5].classList.add('active'); document.getElementById('view-settings').classList.add('active'); }
         }
 
         btnClearDb.addEventListener('click', () => {
-            if (confirm("هل تريد مسح جميع البيانات والتقدم والسجل؟")) {
-                indexedDB.deleteDatabase('FinalAudioDB_v5');
+            if (confirm("مسح جميع البيانات؟")) {
                 localStorage.clear();
                 location.reload();
             }
