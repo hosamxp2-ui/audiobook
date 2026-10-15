@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "صوتي - المكتبة الصوتية الإسلامية",
+  "short_name": "صوتي",
+  "description": "مكتبة صوتية إسلامية لتنظيم الكتب والشروح والدروس الصوتية.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#faf8f1",
+  "theme_color": "#0d493d",
+  "icons": [
+    {"src":"assets/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

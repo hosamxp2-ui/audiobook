@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d493d">
+  <meta name="description" content="مكتبة صوتية إسلامية لتنظيم الكتب والشروح والدروس الصوتية.">
+  <title>صوتي | المكتبة الصوتية الإسلامية</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="صوتي - الصفحة الرئيسية">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M7 10.5c5-2.8 9.2-1.5 13 1.2v19c-3.8-2.7-8-4-13-1.2z"/><path d="M33 10.5c-5-2.8-9.2-1.5-13 1.2v19c3.8-2.7 8-4 13-1.2z"/><path d="M20 12v19"/></svg></span>
+      <span><strong>صوتي</strong><small>المكتبة الصوتية الإسلامية</small></span>
+    </a>
+    <button class="icon-button" id="themeToggle" aria-label="تبديل المظهر" title="تبديل المظهر">☼</button>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span> رفيق رحلتك في طلب العلم</span>
+        <h1>علمٌ تسمعه،<br><em>وأثرٌ يبقى.</em></h1>
+        <p>اجمع كتبك وشروحك الصوتية في مكان واحد، وواصل الاستماع حيثما كنت.</p>
+        <a class="hero-link" href="#library">تصفّح المكتبة <span aria-hidden="true">←</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="book-illustration"><div class="book-spine"></div><div class="book-lines"></div><span>اقرأ<br>واستمع</span><small>عِلْمٌ نَافِع</small></div>
+        <span class="spark spark-a">✦</span><span class="spark spark-b">✧</span><span class="art-leaf">❧</span>
+      </div>
+    </section>
+
+    <section class="quick-stats" aria-label="ملخص المكتبة">
+      <div><span class="stat-icon">▤</span><span><strong id="bookCount">١٢</strong><small>كتابًا تجريبيًا</small></span></div>
+      <div><span class="stat-icon">◷</span><span><strong>قريبًا</strong><small>متابعة الاستماع</small></span></div>
+      <div><span class="stat-icon">♡</span><span><strong id="favoriteCount">٠</strong><small>في المفضلة</small></span></div>
+    </section>
+
+    <section class="section-heading" id="library">
+      <div><span class="eyebrow muted">مكتبتك بين يديك</span><h2>تصفّح المكتبة</h2><p>اختر مجالًا، أو ابحث عن كتاب بعينه.</p></div>
+      <label class="search-box"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="ابحث عن كتاب أو مؤلف..." autocomplete="off" aria-label="البحث عن كتاب أو مؤلف"></label>
+    </section>
+
+    <nav class="category-list" id="categoryList" aria-label="تصنيفات الكتب">
+      <button class="category-chip active" data-category="الكل">الكل <span>١٢</span></button>
+      <button class="category-chip" data-category="العقيدة">العقيدة</button>
+      <button class="category-chip" data-category="الحديث">الحديث</button>
+      <button class="category-chip" data-category="الفقه">الفقه</button>
+      <button class="category-chip" data-category="التفسير">التفسير</button>
+      <button class="category-chip" data-category="السيرة">السيرة</button>
+      <button class="category-chip" data-category="التزكية">التزكية</button>
+      <button class="category-chip" data-category="طلب العلم">طلب العلم</button>
+    </nav>
+
+    <div class="library-toolbar"><p id="resultsLabel">كل الكتب <span>١٢ نتيجة</span></p><label class="sort-control">ترتيب <select id="sortSelect" aria-label="ترتيب الكتب"><option value="featured">المقترحة</option><option value="title">العنوان</option><option value="author">المؤلف</option></select></label></div>
+    <section class="book-grid" id="bookGrid" aria-live="polite" aria-label="قائمة الكتب"></section>
+    <div class="empty-state hidden" id="emptyState"><span>⌕</span><h3>لم نعثر على نتائج</h3><p>جرّب كلمة أخرى أو اختر تصنيفًا مختلفًا.</p><button class="secondary-button" id="resetFilters">عرض كل الكتب</button></div>
+
+    <section class="coming-soon">
+      <div class="coming-icon">♫</div><div><strong>مساحة الاستماع قيد التجهيز</strong><p>في المرحلة التالية نضيف المشغل الصوتي والفصول وحفظ موضع التوقف.</p></div><span class="coming-badge">المرحلة ٢</span>
+    </section>
+    <footer><div class="footer-brand">صوتي <span>•</span></div><p>مكتبة للعلم النافع والاستماع الهادئ.</p><small>نسخة تجريبية أولى — بيانات الكتب المعروضة أمثلة توضيحية وليست روابط صوتية فعلية.</small></footer>
+  </main>
+
+  <nav class="bottom-nav" aria-label="التنقل الرئيسي"><a class="bottom-link active" href="#home"><span>⌂</span><small>الرئيسية</small></a><a class="bottom-link" href="#library"><span>▤</span><small>المكتبة</small></a><button class="bottom-link" id="favoritesNav"><span>♡</span><small>المفضلة</small></button></nav>
+
+  <dialog id="bookDialog" class="book-dialog" aria-labelledby="dialogTitle"><button class="dialog-close" id="dialogClose" aria-label="إغلاق">×</button><div id="dialogContent"></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
