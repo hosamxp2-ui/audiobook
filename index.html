@@ -60,8 +60,21 @@
     <section class="book-grid" id="bookGrid" aria-live="polite" aria-label="قائمة الكتب"></section>
     <div class="empty-state hidden" id="emptyState"><span>⌕</span><h3>لم نعثر على نتائج</h3><p>جرّب كلمة أخرى أو اختر تصنيفًا مختلفًا.</p><button class="secondary-button" id="resetFilters">عرض كل الكتب</button></div>
 
-    <section class="coming-soon">
-      <div class="coming-icon">♫</div><div><strong>مساحة الاستماع قيد التجهيز</strong><p>في المرحلة التالية نضيف المشغل الصوتي والفصول وحفظ موضع التوقف.</p></div><span class="coming-badge">المرحلة ٢</span>
+    <section class="local-library" id="localLibrary">
+      <div class="local-heading">
+        <div><span class="eyebrow muted">ملفاتك تبقى على جهازك</span><h2>مكتبتي الصوتية</h2><p>اختر مجلدًا لمنح المتصفح إذن الوصول، أو استورد ملفات صوتية إلى مساحة التطبيق المحلية.</p></div>
+        <span class="privacy-mark">⌂ محلي فقط</span>
+      </div>
+      <div class="local-actions">
+        <button class="primary" id="chooseFolderBtn">▣ اختيار مجلد صوتي</button>
+        <button class="secondary-button" id="importFilesBtn">＋ استيراد ملفات</button>
+        <input id="audioFilesInput" type="file" accept="audio/*,.mp3,.m4a,.m4b,.aac,.ogg,.opus,.wav,.flac,.wma" multiple hidden>
+      </div>
+      <p class="local-note" id="localStatus" role="status">لم تضف ملفات بعد. الملفات المستوردة تُحفظ محليًا داخل المتصفح؛ ملفات المجلد تُقرأ بإذن المتصفح عند الحاجة.</p>
+      <div class="library-summary" id="librarySummary"></div>
+      <div class="local-groups" id="localGroups"></div>
+      <div class="local-empty" id="localEmpty"><span>♫</span><strong>ابدأ بمكتبتك الخاصة</strong><p>اختر مجلدًا أو استورد ملفات MP3 وغيرها من ملفات الصوت المدعومة.</p></div>
+      <div class="backup-row"><button class="secondary-button" id="exportBackupBtn">تصدير نسخة احتياطية للعلامات والتقدّم</button><button class="text-button" id="clearLocalBtn">مسح بيانات المكتبة المحلية</button></div>
     </section>
     <footer><div class="footer-brand">صوتي <span>•</span></div><p>مكتبة للعلم النافع والاستماع الهادئ.</p><small>نسخة تجريبية أولى — بيانات الكتب المعروضة أمثلة توضيحية وليست روابط صوتية فعلية.</small></footer>
   </main>
@@ -69,6 +82,16 @@
   <nav class="bottom-nav" aria-label="التنقل الرئيسي"><a class="bottom-link active" href="#home"><span>⌂</span><small>الرئيسية</small></a><a class="bottom-link" href="#library"><span>▤</span><small>المكتبة</small></a><button class="bottom-link" id="favoritesNav"><span>♡</span><small>المفضلة</small></button></nav>
 
   <dialog id="bookDialog" class="book-dialog" aria-labelledby="dialogTitle"><button class="dialog-close" id="dialogClose" aria-label="إغلاق">×</button><div id="dialogContent"></div></dialog>
+  <dialog id="playerDialog" class="player-dialog" aria-labelledby="playerTitle">
+    <button class="dialog-close" id="playerClose" aria-label="إغلاق">×</button>
+    <div class="player-top"><span class="eyebrow muted">جلسة استماع محلية</span><h2 id="playerTitle">مشغل صوتي</h2><p id="playerSubtitle"></p></div>
+    <audio id="audioPlayer" controls preload="metadata"></audio>
+    <div class="player-progress-label"><span>تقدّم هذا الملف</span><strong id="fileProgressText">٠٪</strong></div><progress id="fileProgressBar" max="100" value="0"></progress>
+    <div class="player-time-row"><span id="currentTimeText">٠:٠٠</span><span id="durationText">٠:٠٠</span></div>
+    <div class="player-actions"><button id="bookmarkAddBtn" class="primary">＋ إضافة علامة مرجعية</button><button id="resumeStartBtn" class="secondary-button">العودة إلى آخر موضع محفوظ</button></div>
+    <section class="bookmark-section"><h3>علاماتي المرجعية</h3><div id="bookmarkList" class="bookmark-list"></div></section>
+    <p class="player-disclaimer">يُحفظ موضع التشغيل والعلامات على هذا المتصفح. احتفظ بنسخة احتياطية عند الحاجة، ولا تمسح بيانات الموقع إذا أردت بقاء البيانات المحلية.</p>
+  </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="app.js" defer></script>
 </body>
